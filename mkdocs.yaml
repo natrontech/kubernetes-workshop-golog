@@ -70,12 +70,14 @@ extra:
 # Page tree
 nav:
   - Setup:
-    - _index: setup/client-setup/index.md
-    - Linux: setup/client-setup/linux.md
-    - Windows: setup/client-setup/windows.md
-    - Mac OS: setup/client-setup/macos.md
-    - Verify: setup/client-setup/verify.md
-    - Tools: setup/tools.md
+    - Client setup:
+      - setup/client-setup/index.md
+      - Linux: setup/client-setup/linux.md
+      - Windows: setup/client-setup/windows.md
+      - Mac OS: setup/client-setup/macos.md
+      - Verify: setup/client-setup/verify.md
+    - Tools:
+      - setup/tools/index.md
   # - Materials:
   # - Labs:
 
