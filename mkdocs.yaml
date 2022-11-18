@@ -65,10 +65,10 @@ extra:
 # Page tree
 nav:
   - Setup:
-    - _index: setup/index.md
-    - Linux: setup/linux.md
-    - Windows: setup/windows.md
-    - Mac OS: setup/macos.md
+    - _index: setup/client-setup/index.md
+    - Linux: setup/client-setup/linux.md
+    - Windows: setup/client-setup/windows.md
+    - Mac OS: setup/client-setup/macos.md
     - Tools: setup/tools.md
   # - Materials:
   # - Labs:
