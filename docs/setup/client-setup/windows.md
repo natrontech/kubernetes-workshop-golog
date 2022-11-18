@@ -1,7 +1,7 @@
 # 1. Windows
 If installing from the official package repository doesn't work (or requires a specific version), you can download the static binaries and place them in the following paths:
 
-```bash
+```powershell
 C:\Kubernetes\
 ```
 
@@ -13,4 +13,5 @@ In Windows, the **PATH** environment variable can be used to add the `kubectl` c
 
     Copy the `kubectl` binary directly to the `C:\Windows` directory.
 
-Verify that the `kubectl` command is available.
+## 1.4 Verify
+Verify that the `kubectl` command is available at the [Verification](setup/client-setup/verify.md) page.

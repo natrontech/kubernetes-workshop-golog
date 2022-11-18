@@ -69,6 +69,7 @@ nav:
     - Linux: setup/client-setup/linux.md
     - Windows: setup/client-setup/windows.md
     - Mac OS: setup/client-setup/macos.md
+    - Verify: setup/client-setup/verify.md
     - Tools: setup/tools.md
   # - Materials:
   # - Labs:
