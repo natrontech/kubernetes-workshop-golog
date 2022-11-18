@@ -53,9 +53,6 @@ theme:
 plugins:
   - enumerate-headings:
       increment_across_pages: false
-      exclude:
-        - index
-        - 404
   - search:
       lang: en
 
@@ -69,15 +66,16 @@ extra:
 
 # Page tree
 nav:
+  - Home: index.md
   - Setup:
     - Client setup:
-      - setup/client-setup/index.md
+      - _index: setup/client-setup/index.md
       - Linux: setup/client-setup/linux.md
       - Windows: setup/client-setup/windows.md
       - Mac OS: setup/client-setup/macos.md
       - Verify: setup/client-setup/verify.md
     - Tools:
-      - setup/tools/index.md
+      - _index: setup/tools/index.md
   # - Materials:
   # - Labs:
 
