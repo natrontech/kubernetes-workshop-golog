@@ -51,7 +51,11 @@ theme:
 
 # Plugins
 plugins:
-  - enumerate-headings
+  - enumerate-headings:
+      increment_across_pages: false
+      exclude:
+        - index
+        - 404
   - search:
       lang: en
 
