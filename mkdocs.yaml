@@ -15,7 +15,7 @@ copyright: Copyright &copy; 2022 Natron Tech GmbH
 # Configuration
 theme:
   favicon: assets/logo_natron_kubernetes.png
-  logo: assets/logo_natron.png
+  logo: assets/logo_natron_kubernetes.png
   name: material
   language: en
   font:
@@ -43,6 +43,8 @@ theme:
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
+      primary: black
+      accent: indigo
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
