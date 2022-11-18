@@ -63,8 +63,8 @@ nav:
   - Setup:
     - Client setup: setup/client-setup.md
     - Tools: setup/tools.md
-  - Materials:
-  - Labs:
+  # - Materials:
+  # - Labs:
 
 # Markdown extensions
 markdown_extensions:
