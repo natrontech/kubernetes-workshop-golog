@@ -16,4 +16,5 @@ Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.0", GitCom
 You can have a look at the [Tools](tools.md) page to see what tools are available to help you manage your Kubernetes cluster.
 
 # Next steps
+The `kubectl` has many commands and options. Check them out with `kubectl --help` or `kubectl <command> --help`.
 Now that you have installed `kubectl`, you can continue with the [Kubernetes Basics](../kubernetes-basics/index.md) tutorial.
