@@ -1,18 +1,18 @@
-# Linux
+# 1. Linux
 If installing from the official package repository doesn't work (or requires a specific version), you can download the static binaries and place them in the following paths:
 
 ```bash
 ~/bin
 ```
 
-## File mode
+## 1.1 File mode
 The binary `kubectl` has to be executable.
 
 ```bash
 chmod +x ~/bin/kubectl
 ```
 
-## Add to PATH
+## 1.2 Add to PATH
 On Linux, you can add the `~/bin` directory to your PATH environment variable to make the `kubectl` command available to all users on the system.  
 If `kubectl` is placed in a different directory, you can change the path to that directory.
 
@@ -20,7 +20,7 @@ If `kubectl` is placed in a different directory, you can change the path to that
 export PATH=$PATH:~/bin
 ```
 
-## Autocomplete
+## 1.3 Autocomplete
 
 On most Linux distributions, you have to install the `bash-completion` package to enable autocompletion.
 
@@ -42,14 +42,14 @@ sudo yum install bash-completion
 sudo dnf install bash-completion
 ```
 
-### Bash
+### 1.3.1 Bash
 To enable bash autocompletion, add the following to your `~/.bashrc` file:
 
 ```bash
 source <(kubectl completion bash)
 ```
 
-### Zsh
+### 1.3.2 Zsh
 To enable zsh autocompletion, add the following to your `~/.zshrc` file:
 
 ```bash
