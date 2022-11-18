@@ -15,4 +15,4 @@ In Windows, the **PATH** environment variable can be used to add the `kubectl` c
     Copy the `kubectl` binary directly to the `C:\Windows` directory.
 
 ## Verify
-Verify that the `kubectl` command is available at the [Verify](setup/client-setup/verify/) page.
+Verify that the `kubectl` command is available at the [Verify](#Verify) page.
