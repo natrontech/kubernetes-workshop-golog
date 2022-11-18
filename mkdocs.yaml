@@ -53,6 +53,8 @@ theme:
 plugins:
   - enumerate-headings:
       increment_across_pages: false
+      exclude:
+        - index.md
   - search:
       lang: en
 
