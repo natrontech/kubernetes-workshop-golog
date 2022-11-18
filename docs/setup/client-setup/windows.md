@@ -6,6 +6,7 @@ C:\Kubernetes\
 ```
 
 In Windows, the **PATH** environment variable can be used to add the `kubectl` command to the system path.
+
 - [Windows 10](https://www.thewindowsclub.com/how-to-add-edit-a-path-variable-in-windows)
 - [Windows 11](https://thecategorizer.com/windows/how-to-add-path-and-environment-variables-in-windows/)
 
