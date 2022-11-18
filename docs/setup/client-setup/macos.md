@@ -35,3 +35,6 @@ To enable zsh autocompletion, add the following to your `~/.zshrc` file:
 ```bash
 source <(kubectl completion zsh)
 ```
+
+## Verify
+Verify that the `kubectl` command is available at the [Verify](verify.md) page.

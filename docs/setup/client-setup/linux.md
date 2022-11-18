@@ -57,4 +57,4 @@ source <(kubectl completion zsh)
 ```
 
 ## Verify
-Verify that the `kubectl` command is available at the [Verify](setup/client-setup/verify/) page.
+Verify that the `kubectl` command is available at the [Verify](verify.md) page.
