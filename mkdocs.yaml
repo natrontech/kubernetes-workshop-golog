@@ -78,6 +78,35 @@ nav:
       - Verify: setup/client-setup/verify.md
     - Tools:
       - _index: setup/tools/index.md
+  - Kubernetes Basics:
+    - Introduction:
+      - _index: kubernetes-basics/introduction/index.md
+      - YAML: kubernetes-basics/introduction/yaml.md
+    - Deploying Containers: kubernetes-basics/deploying-containers.md
+    - Exposing Services: kubernetes-basics/exposing-services.md
+    - Scaling Applications: kubernetes-basics/scaling-applications.md
+    - Troubleshooting: kubernetes-basics/troubleshooting.md
+    - Database Attachments: kubernetes-basics/database-attachments.md
+    - Storage: kubernetes-basics/storage.md
+    - Advanced Concepts:
+      - _index: kubernetes-basics/advanced-concepts/index.md
+      - StatefulSets: kubernetes-basics/advanced-concepts/statefulsets.md
+      - DaemonSets: kubernetes-basics/advanced-concepts/daemonsets.md
+      - Jobs and CronJobs: kubernetes-basics/advanced-concepts/jobs-and-cronjobs.md
+      - ConfigMaps and Secrets: kubernetes-basics/advanced-concepts/configmaps.md
+      - ResourceQuotas and Limits: kubernetes-basics/advanced-concepts/resource-quotas.md
+      - Init Containers: kubernetes-basics/advanced-concepts/init-containers.md
+      - Sidecars: kubernetes-basics/advanced-concepts/sidecars.md
+    - Security: 
+      - _index: kubernetes-basics/security/index.md
+      - RBAC: kubernetes-basics/security/rbac.md
+      - Pod Security Policies: kubernetes-basics/security/pod-security-policies.md
+      - Network Policies: kubernetes-basics/security/network-policies.md
+      - Security Contexts: kubernetes-basics/security/security-contexts.md
+    - Helm:
+      - _index: kubernetes-basics/helm/index.md
+      - Helm Charts: kubernetes-basics/helm/helm-charts.md
+    - Kustomize: kubernetes-basics/kustomize.md
   # - Materials:
   # - Labs:
 
