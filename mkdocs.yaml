@@ -14,7 +14,7 @@ copyright: Copyright &copy; 2022 Natron Tech GmbH
 
 # Configuration
 theme:
-  favicon: assets/images/logo_natron_kubernetes.png
+  favicon: assets/logo_natron_kubernetes.png
   logo: assets/logo_natron_kubernetes.png
   name: material
   language: en
@@ -85,7 +85,7 @@ markdown_extensions:
       custom_checkbox: true
 
 extra_css:
-  - stylesheets/extra.css
+  - assets/stylesheets/extra.css
 
 extra_javascript:
-  - javascripts/extra.js
+  - assets/javascripts/extra.js
