@@ -1,0 +1,91 @@
+# Project information
+site_name: Kubernetes Workshop
+site_author: Natron Tech GmbH
+site_description: >-
+  Documentation and guides for the Kubernetes Workshop by Natron Tech GmbH.
+
+# Repository
+repo_url: https://github.com/natrongmbh/kubernetes-workshop
+repo_name: natrongmbh/kubernetes-workshop
+edit_uri: ""
+
+# Copyright
+copyright: Copyright &copy; 2022 Natron Tech GmbH
+
+# Configuration
+theme:
+  favicon: assets/images/logo_natron_kubernetes.png
+  logo: assets/logo_natron_kubernetes.png
+  name: material
+  language: en
+  font:
+    text: Roboto
+    code: Roboto Mono
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.annotate
+    - navigation.indexes
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: natron-light
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+# Plugins
+plugins:
+  - search:
+      lang: de
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/natrongmbh
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/natron-gmbh
+
+# Page tree
+nav:
+  - Setup:
+    - Client setup: setup/client-setup.md
+    - Tools: setup/tools.md
+  - Materials:
+  - Labs:
+
+# Markdown extensions
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - attr_list
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
