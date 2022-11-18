@@ -3,7 +3,15 @@ Verify that the `kubectl` command is available by running the following command:
 ```bash
 kubectl version --client
 ```
-The output should be similar to the following (1):
+
+Lorem ipsum dolor sit amet, (1) consectetur adipiscing elit.
+{ .annotate }
+
+1.  :man_raising_hand: I'm an annotation! I can contain `code`, __formatted
+    text__, images, ... basically anything that can be expressed in Markdown.
+
+
+The output should be similar to the following (1) :
 { .annotate }
 
 1.  Make sure that the version of the client is the same or higher than the version of the cluster.
