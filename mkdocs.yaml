@@ -108,7 +108,7 @@ nav:
       - Helm Charts: kubernetes-basics/helm/helm-charts.md
     - Kustomize: kubernetes-basics/kustomize.md
   - Materials:
-    Credits: materials/credits.md
+    - Credits: materials/credits.md
   # - Labs:
 
 # Markdown extensions
