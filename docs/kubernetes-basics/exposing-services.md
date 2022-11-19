@@ -138,7 +138,7 @@ Events:                   <none>
 
 The `Endpoints` show the IP addresses of all currently matched Pods.
 
-With the ClusterIP Service ready, we can now create the Ingress resource.
+With the NodePort Service ready, we can now create the Ingress resource.
 
 In order to create the Ingress resource, we first need to create the file `ingress.yaml` and change the host entry to match your environment:
 
@@ -168,4 +168,33 @@ spec:
             name: test-webserver
             port:
               number: 8080
+```
+
+As you see in the resource definition at `spec.rules[0].http.paths[0].backend.service.name` we use the previously created `test-webserver` NodePort Service.
+
+Let’s create the Ingress resource with:
+
+```bash
+kubectl apply -f ingress.yaml --namespace <namespace>
+```
+
+Afterwards, we are able to access our freshly created Ingress at `http://test.k8s.golog.ch`
+
+## :octicons-tasklist-16: **Task 2**: For fast learners
+Have a closer look at the resources created in your namespace <namespace> with the following commands and try to understand them:
+
+```bash
+kubectl describe namespace <namespace>
+```
+
+```bash
+kubectl get all --namespace <namespace>
+```
+
+```bash
+kubectl describe <resource> <name> --namespace <namespace>
+```
+
+```bash
+kubectl get <resource> <name> -o yaml --namespace <namespace>
 ```
