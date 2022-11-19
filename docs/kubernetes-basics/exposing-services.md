@@ -19,20 +19,20 @@ You can also use Ingress to expose your Service. Ingress is not a Service type, 
 In order to create an Ingress, we first need to create a Service of type [ClusterIP](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) . We’re going to do this with the command `kubectl expose`:
 
 ```bash
-kubectl expose deployment/test-webserver-v1 --name=test-webserver-v1 --port=80 --target-port=80 --type=NodePort --namespace <namespace>
+kubectl expose deployment/test-webserver --name=test-webserver --port=8080 --target-port=8080 --type=NodePort --namespace <namespace>
 ```
 
 Let’s have a more detailed look at our Service:
 
 ```bash
-kubectl get service test-webserver-v1 --namespace <namespace>
+kubectl get service test-webserver --namespace <namespace>
 ```
 
 The output should look like this:
 
 ```bash
 NAME                TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
-test-webserver-v1   NodePort   10.97.53.32   <none>        80:32329/TCP   4s
+test-webserver      NodePort   10.97.53.32   <none>        8080:32329/TCP   4s
 ```
 
 !!! note
@@ -42,7 +42,7 @@ test-webserver-v1   NodePort   10.97.53.32   <none>        80:32329/TCP   4s
 By executing the following command:
 
 ```bash
-kubectl get service test-webserver-v1 -o yaml --namespace <namespace>
+kubectl get service test-webserver -o yaml --namespace <namespace>
 ```
 
 You get additional information:
@@ -52,8 +52,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: test-webserver-v1
-  name: test-webserver-v1
+    app: test-webserver
+  name: test-webserver
   namespace: test-ns
   resourceVersion: "4270474"
 spec:
@@ -67,11 +67,11 @@ spec:
   ipFamilyPolicy: SingleStack
   ports:
   - nodePort: 32329
-    port: 80
+    port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
-    app: test-webserver-v1
+    app: test-webserver
   sessionAffinity: None
   type: NodePort
 status:
@@ -81,13 +81,13 @@ status:
 The Service’s `selector` defines which Pods are being used as Endpoints. This happens based on labels. Look at the configuration of Service and Pod in order to find out what maps to what:
 
 ```bash
-kubectl get service test-webserver-v1 -o yaml --namespace <namespace>
+kubectl get service test-webserver -o yaml --namespace <namespace>
 ```
 
 ```yaml
 ...
   selector:
-    app: test-webserver-v1
+    app: test-webserver
 ...
 ```
 
@@ -106,29 +106,29 @@ Let’s have a look at the label section of the Pod and verify that the Service 
 ```yaml
 ...
   labels:
-    app: test-webserver-v1
+    app: test-webserver
 ...
 ```
 
 This link between Service and Pod can also be displayed in an easier fashion with the kubectl describe command:
 
 ```bash
-kubectl describe service test-webserver-v1 --namespace <namespace>
+kubectl describe service test-webserver --namespace <namespace>
 ```
 
 ```
-Name:                     test-webserver-v1
+Name:                     test-webserver
 Namespace:                test-ns
-Labels:                   app=test-webserver-v1
+Labels:                   app=test-webserver
 Annotations:              <none>
-Selector:                 app=test-webserver-v1
+Selector:                 app=test-webserver
 Type:                     NodePort
 IP Family Policy:         SingleStack
 IP Families:              IPv4
 IP:                       10.97.53.32
 IPs:                      10.97.53.32
-Port:                     <unset>  80/TCP
-TargetPort:               80/TCP
+Port:                     <unset>  8080/TCP
+TargetPort:               8080/TCP
 NodePort:                 <unset>  32329/TCP
 Endpoints:                <none>
 Session Affinity:         None
@@ -146,7 +146,7 @@ In order to create the Ingress resource, we first need to create the file `ingre
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: test-webserver-v1
+  name: test-webserver
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
@@ -156,7 +156,7 @@ spec:
   tls:
   - hosts:
     - test.k8s.golog.ch
-    secretName: test-webserver-v1-tls
+    secretName: test-webserver-tls
   rules:
   - host: test.k8s.golog.ch
     http:
@@ -165,7 +165,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: test-webserver-v1
+            name: test-webserver
             port:
-              number: 80
+              number: 8080
 ```

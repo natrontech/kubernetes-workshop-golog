@@ -12,12 +12,12 @@ Create a new file `03_pod.yaml` with the following content:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: test-webserver-v1
+  name: test-webserver
 spec:
   containers:
-  - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver-v1:latest
+  - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest
     imagePullPolicy: Always
-    name: test-webserver-v1
+    name: test-webserver
     resources:
       limits:
         cpu: 20m
@@ -35,7 +35,7 @@ kubectl apply -f 03_pod.yaml --namespace <namespace>
 
 The output should be:
 ```bash
-pod/test-webserver-v1 created
+pod/test-webserver created
 ```
 
 Use `kubectl get pods --namespace <namespace>` in order to show the running Pod:
@@ -48,13 +48,13 @@ Which gives you an output similar to this:
 
 ```bash
 NAME                READY   STATUS    RESTARTS   AGE
-test-webserver-v1   1/1     Running   0          2m
+test-webserver   1/1     Running   0          2m
 ```
 
 Now we can delete the Pod with:
 
 ```bash
-kubectl delete pod test-webserver-v1 --namespace <namespace>
+kubectl delete pod test-webserver --namespace <namespace>
 ```
 
 ## :octicons-tasklist-16: **Task 2**: Create a Deployment
@@ -67,21 +67,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: test-webserver-v1
-  name: test-webserver-v1
+    app: test-webserver
+  name: test-webserver
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: test-webserver-v1
+      app: test-webserver
   template:
     metadata:
       labels:
-        app: test-webserver-v1
+        app: test-webserver
     spec:
       containers:
-      - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver-v1:latest
-        name: test-webserver-v1
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest
+        name: test-webserver
         resources:
           requests:
             cpu: 10m
@@ -100,7 +100,7 @@ kubectl apply -f 03_deployment.yaml --namespace <namespace>
 The output should be:
 
 ```bash
-deployment.apps/test-webserver-v1 created
+deployment.apps/test-webserver created
 ```
 
 Kubernetes creates the defined and necessary resources, pulls the container image (in this case from ghcr.io) and deploys the Pod.
@@ -137,7 +137,7 @@ The other variant is to use helper commands. These are more straightforward: You
 As an example, let’s look at creating above deployment, this time using a helper command instead. If you already created the Deployment using above YAML definition, you don’t have to execute this command:
 
 ```bash
-kubectl create deployment test-webserver-v1 --image=ghcr.io/natrongmbh/kubernetes-workshop-test-webserver-v1:latest --namespace <namespace>
+kubectl create deployment test-webserver --image=ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest --namespace <namespace>
 ```
 
 It’s important to know that these helper commands exist. However, in a world where GitOps concepts have an ever-increasing presence, the idea is not to constantly create these resources with helper commands. Instead, we save the resources’ YAML definitions in a Git repository and leave the creation and management of those resources to a tool.
@@ -161,7 +161,7 @@ A [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deploym
 By using the `-o` (or `--output`) parameter we get a lot more information about the deployment itself. You can choose between YAML and JSON formatting by indicating `-o yaml` or `-o json`. In this training we are going to use YAML, but please feel free to replace `yaml` with `json` if you prefer.
 
 ```bash
-kubectl get deployments test-webserver-v1 -o yaml --namespace <namespace>
+kubectl get deployments test-webserver -o yaml --namespace <namespace>
 ```
 
 After the image has been pulled, Kubernetes deploys a Pod according to the Deployment:
@@ -174,7 +174,7 @@ which gives you an output similar to this:
 
 ```bash
 NAME                                READY   STATUS    RESTARTS   AGE
-test-webserver-v1-7f7b9b9b4-2j2xg   1/1     Running   0          2m
+test-webserver-7f7b9b9b4-2j2xg      1/1     Running   0          2m
 ```
 
 The Deployment defines that one replica should be deployed — which is running as we can see in the output. This Pod is not yet reachable from outside the cluster.
