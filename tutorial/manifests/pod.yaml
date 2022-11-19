@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-webserver
+spec:
+  containers:
+  - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest
+    imagePullPolicy: Always
+    name: test-webserver
+    resources:
+      limits:
+        cpu: 20m
+        memory: 32Mi
+      requests:
+        cpu: 10m
+        memory: 16Mi

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-webserver
+  name: test-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-webserver
+  template:
+    metadata:
+      labels:
+        app: test-webserver
+    spec:
+      containers:
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest
+        name: test-webserver
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            cpu: 20m
+            memory: 32Mi
