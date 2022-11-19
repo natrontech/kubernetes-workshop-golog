@@ -10,3 +10,7 @@ This section lists some of the most common tools.
 
 ## lens
 [Lens](https://k8slens.dev/) is a tool that can help you manage your Kubernetes clusters with a graphical user interface.
+
+## minikube
+To install minikube you need docker or podman installed on your machine.
+[minikube](https://minikube.sigs.k8s.io/) is a tool that can help you run a single-node Kubernetes cluster locally.
