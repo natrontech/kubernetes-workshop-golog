@@ -85,3 +85,12 @@ There are different kinds of Services:
 - `ExternalName`: A DNS entry is created, also only works in cloud environments
 
 A Service is unique inside a Namespace.
+
+### Deployments
+Have a look at the [official documentation](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/).
+
+### Volumes
+Have a look at the [official documentation](https://kubernetes.io/docs/concepts/storage/volumes/).
+
+### Jobs
+Have a look at the [official documentation](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/).
