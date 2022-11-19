@@ -13,5 +13,4 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install mkdocs-material
-      - run: pip3 install mkdocs-enumerate-headings-plugin
       - run: mkdocs gh-deploy --force
