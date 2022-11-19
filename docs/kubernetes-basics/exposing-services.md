@@ -178,7 +178,7 @@ Let’s create the Ingress resource with:
 kubectl apply -f ingress.yaml --namespace <namespace>
 ```
 
-Afterwards, we are able to access our freshly created Ingress at `http://test.k8s.golog.ch`
+Afterwards, we are able to access our freshly created Ingress at `https://test.k8s.golog.ch`
 
 ## :octicons-tasklist-16: **Task 2**: For fast learners
 Have a closer look at the resources created in your namespace <namespace> with the following commands and try to understand them:
