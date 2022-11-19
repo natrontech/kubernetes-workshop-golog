@@ -84,7 +84,7 @@ nav:
     - Exposing Services: kubernetes-basics/exposing-services.md
     - Scaling Applications: kubernetes-basics/scaling-applications.md
     - Troubleshooting: kubernetes-basics/troubleshooting.md
-    - Database Attachments: kubernetes-basics/database-attachments.md
+    - Database Connection: kubernetes-basics/database-connection.md
     - Storage: kubernetes-basics/storage.md
     - Advanced Concepts:
       - kubernetes-basics/advanced-concepts/index.md
