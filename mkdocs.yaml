@@ -79,6 +79,7 @@ nav:
     - Introduction:
       - kubernetes-basics/introduction/index.md
       - YAML: kubernetes-basics/introduction/yaml.md
+    - First Steps: kubernetes-basics/first-steps.md
     - Deploying Containers: kubernetes-basics/deploying-containers.md
     - Exposing Services: kubernetes-basics/exposing-services.md
     - Scaling Applications: kubernetes-basics/scaling-applications.md
