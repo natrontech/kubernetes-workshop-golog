@@ -1,6 +1,6 @@
 # Introduction
-In this lab, we introduced the core concepts of Kubernetes.  
-All instructions and resources used in this lab are for quick overview only, not detailed instructions.   
+In this tutorial, we introduced the core concepts of Kubernetes.  
+All instructions and resources used in this tutorial are for quick overview only, not detailed instructions.   
 Please check the official documentation for more details. 
 
 - [Kubernetes Docs](https://kubernetes.io/docs/home/)

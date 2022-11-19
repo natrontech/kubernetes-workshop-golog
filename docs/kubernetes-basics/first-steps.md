@@ -1,9 +1,9 @@
 # First Steps
-In this lab, we will interact with the Kubernetes cluster for the first time.
+In this tutorial, we will interact with the Kubernetes cluster for the first time.
 
 !!! warning
 
-    Please make sure you completed [Setup](../setup/client-setup/index.md) before you continue with this lab.
+    Please make sure you completed [Setup](../setup/client-setup/index.md) before you continue with this tutorial.
 
 ## Login
 To login to the stepping stone cluster head over to the [Stepping Stone Wiki](https://wiki.golog.ch/wiki/Category:Customer:_Golog_AG).
@@ -22,7 +22,7 @@ Authorized users inside a namespace are able to manage those resources.
 Namespace names have to be unique in your cluster.
 
 ### Task: Create a new Namespace
-Create a new namespace in the lab environment. 
+Create a new namespace in the tutorial environment. 
 The `kubectl help` output can help you figure out the right command.
 
 !!! note
@@ -37,7 +37,7 @@ The `kubectl help` output can help you figure out the right command.
     kubectl create namespace <namespace>
     ```
 
-```note
+!!! note
 
     By using the following command, you can switch into another Namespace instead of specifying it for each `kubectl` command.
 
