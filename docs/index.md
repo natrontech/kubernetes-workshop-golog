@@ -1,5 +1,4 @@
 # :simple-kubernetes: Kubernetes Workshop
-
 This workshop is a collection of materials that can be used to teach Kubernetes to beginners.  
 The goal is to provide a quick overview of the most important concepts and tools.  
 It's also a good starting point for self-study.  
