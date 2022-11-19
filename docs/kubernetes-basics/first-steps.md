@@ -21,7 +21,7 @@ Take a look at the [Kubernetes docs](https://kubernetes.io/docs/concepts/overvie
 Authorized users inside a namespace are able to manage those resources. 
 Namespace names have to be unique in your cluster.
 
-### :octicons-tasklist-16: **Task**: Create a new Namespace
+### :octicons-tasklist-16: **Task 1**: Create a new Namespace
 Create a new namespace in the tutorial environment. 
 The `kubectl help` output can help you figure out the right command.
 

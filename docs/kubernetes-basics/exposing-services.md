@@ -1,0 +1,171 @@
+# Exposing Services
+
+In this module, you'll learn how to expose an application to the outside world.
+
+## :octicons-tasklist-16: **Task 1**: Create a NodePort Service with an Ingress
+The command `kubectl apply -f 03_deployment.yaml `from the last tutorial creates a Deployment but no Service. A Kubernetes Service is an abstract way to expose an application running on a set of Pods as a network service. For some parts of your application (for example, frontends) you may want to expose a Service to an external IP address which is outside your cluster.
+
+Kubernetes `ServiceTypes` allow you to specify what kind of Service you want. The default is `ClusterIP`.
+
+`Type` values and their behaviors are:
+
+- `ClusterIP`: Exposes the Service on a cluster-internal IP. Choosing this value only makes the Service reachable from within the cluster. This is the default ServiceType.
+- `NodePort`: Exposes the Service on each Node’s IP at a static port (the NodePort). A ClusterIP Service, to which the NodePort Service routes, is automatically created. You’ll be able to contact the NodePort Service from outside the cluster, by requesting <NodeIP>:<NodePort>.
+- `LoadBalancer`: Exposes the Service externally using a cloud provider’s load balancer. NodePort and ClusterIP Services, to which the external load balancer routes, are automatically created.
+- `ExternalName`: Maps the Service to the contents of the externalName field (e.g. foo.bar.example.com), by returning a CNAME record with its value. No proxying of any kind is set up.
+
+You can also use Ingress to expose your Service. Ingress is not a Service type, but it acts as the entry point for your cluster. [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource. An Ingress may be configured to give Services externally reachable URLs, load balance traffic, terminate SSL / TLS, and offer name-based virtual hosting. An Ingress controller is responsible for fulfilling the route, usually with a load balancer, though it may also configure your edge router or additional frontends to help handle the traffic.
+
+In order to create an Ingress, we first need to create a Service of type [ClusterIP](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) . We’re going to do this with the command `kubectl expose`:
+
+```bash
+kubectl expose deployment/test-webserver-v1 --name=test-webserver-v1 --port=80 --target-port=80 --type=NodePort --namespace <namespace>
+```
+
+Let’s have a more detailed look at our Service:
+
+```bash
+kubectl get service test-webserver-v1 --namespace <namespace>
+```
+
+The output should look like this:
+
+```bash
+NAME                TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+test-webserver-v1   NodePort   10.97.53.32   <none>        80:32329/TCP   4s
+```
+
+!!! note
+
+    Service IP (CLUSTER-IP) addresses stay the same for the duration of the Service’s lifespan.
+
+By executing the following command:
+
+```bash
+kubectl get service test-webserver-v1 -o yaml --namespace <namespace>
+```
+
+You get additional information:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: test-webserver-v1
+  name: test-webserver-v1
+  namespace: test-ns
+  resourceVersion: "4270474"
+spec:
+  clusterIP: 10.97.53.32
+  clusterIPs:
+  - 10.97.53.32
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 32329
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: test-webserver-v1
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+```
+
+The Service’s `selector` defines which Pods are being used as Endpoints. This happens based on labels. Look at the configuration of Service and Pod in order to find out what maps to what:
+
+```bash
+kubectl get service test-webserver-v1 -o yaml --namespace <namespace>
+```
+
+```yaml
+...
+  selector:
+    app: test-webserver-v1
+...
+```
+
+With the following command you get details from the Pod:
+
+!!! note
+
+    First, get all Pod names from your namespace with (`kubectl get pods --namespace <namespace>`) and then replace <pod> in the following command. If you have installed and configured the bash completion, you can also press the TAB key for autocompletion of the Pod’s name.
+
+```bash
+kubectl get pod <pod> -o yaml --namespace <namespace>
+```
+
+Let’s have a look at the label section of the Pod and verify that the Service selector matches the Pod’s labels:
+
+```yaml
+...
+  labels:
+    app: test-webserver-v1
+...
+```
+
+This link between Service and Pod can also be displayed in an easier fashion with the kubectl describe command:
+
+```bash
+kubectl describe service test-webserver-v1 --namespace <namespace>
+```
+
+```
+Name:                     test-webserver-v1
+Namespace:                test-ns
+Labels:                   app=test-webserver-v1
+Annotations:              <none>
+Selector:                 app=test-webserver-v1
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.97.53.32
+IPs:                      10.97.53.32
+Port:                     <unset>  80/TCP
+TargetPort:               80/TCP
+NodePort:                 <unset>  32329/TCP
+Endpoints:                <none>
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+```
+
+The `Endpoints` show the IP addresses of all currently matched Pods.
+
+With the ClusterIP Service ready, we can now create the Ingress resource.
+
+In order to create the Ingress resource, we first need to create the file `ingress.yaml` and change the host entry to match your environment:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-webserver-v1
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/add-base-url: "true"
+spec:
+  tls:
+  - hosts:
+    - test.k8s.golog.ch
+    secretName: test-webserver-v1-tls
+  rules:
+  - host: test.k8s.golog.ch
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: test-webserver-v1
+            port:
+              number: 80
+```
