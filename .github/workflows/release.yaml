@@ -6,8 +6,8 @@
 name: Docker Image Build & Push
 
 on:
-  release:
-      types: [created]
+  push:
+    tags: [ '*' ]
 
 env:
   REGISTRY: ghcr.io
