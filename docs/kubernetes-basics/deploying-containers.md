@@ -6,7 +6,7 @@ After we’ve familiarized ourselves with the platform, we are going to have a l
 
 First, we are going to directly start a new Pod.
 For this we have to define our Kubernetes Pod resource definition. 
-Create a new file `03_pod.yaml` with the following content:
+Create a new file `pod.yaml` with the following content:
 
 ```yaml
 apiVersion: v1
@@ -30,7 +30,7 @@ spec:
 Now we can apply this with:
 
 ```bash
-kubectl apply -f 03_pod.yaml --namespace <namespace>
+kubectl apply -f pod.yaml --namespace <namespace>
 ```
 
 The output should be:
@@ -60,7 +60,7 @@ kubectl delete pod test-webserver --namespace <namespace>
 ## :octicons-tasklist-16: **Task 2**: Create a Deployment
 In some use cases it can make sense to start a single Pod. But this has its downsides and is not really a common practice. Let’s look at another concept which is tightly coupled with the Pod: the so-called *Deployment*. A Deployment ensures that a Pod is monitored and checks that the number of running Pods corresponds to the number of requested Pods.
 
-To create a new Deployment we first define our Deployment in a new file `03_deployment.yaml` with the following content:
+To create a new Deployment we first define our Deployment in a new file `deployment.yaml` with the following content:
 
 ```yaml
 apiVersion: apps/v1
@@ -94,7 +94,7 @@ spec:
 And with this we create our Deployment inside our already created namespace:
 
 ```bash
-kubectl apply -f 03_deployment.yaml --namespace <namespace>
+kubectl apply -f deployment.yaml --namespace <namespace>
 ```
 
 The output should be:
