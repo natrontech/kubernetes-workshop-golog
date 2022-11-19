@@ -33,6 +33,7 @@ theme:
     - search.highlight
     - search.share
     - search.suggest
+    - navigation.prune
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
