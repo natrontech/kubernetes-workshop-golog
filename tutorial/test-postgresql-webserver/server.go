@@ -18,16 +18,50 @@ var (
 	DB_HOST     = os.Getenv("DB_HOST")
 	DB_PORT     = os.Getenv("DB_PORT")
 	DB_SSLMODE  = os.Getenv("DB_SSLMODE")
+	seeded      = false
 )
 
+type Test struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+}
+
 func init() {
-	initDB()
+	err := initDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if !seeded {
+		_, err = DB.Exec("DROP TABLE IF EXISTS test")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		_, err = DB.Exec("CREATE TABLE IF NOT EXISTS test (id SERIAL, name VARCHAR(255))")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		seedData := []Test{
+			{Name: "test1"},
+			{Name: "test2"},
+			{Name: "test3"},
+		}
+
+		for _, v := range seedData {
+			_, err = DB.Exec("INSERT INTO test (name) VALUES ($1)", v.Name)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+
+		seeded = true
+	}
 }
 
 func main() {
 	app := fiber.New()
-
-	app.Post("/seed", seedHandler)
 
 	app.Get("/select", selectHandler)
 
@@ -38,23 +72,6 @@ func main() {
 	log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
 }
 
-// TODO: fix this
-func seedHandler(c *fiber.Ctx) error {
-	log.Println("Seeding database")
-	// create table
-	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS test (id SERIAL PRIMARY KEY, name TEXT)")
-	if err != nil {
-		return err
-	}
-
-	// insert data
-	_, err = DB.Exec("INSERT INTO test (name) VALUES ('test')")
-	if err != nil {
-		return err
-	}
-
-	return c.SendString("seeded")
-}
 func selectHandler(c *fiber.Ctx) error {
 	// select data and return as json
 	rows, err := DB.Query("SELECT * FROM test")
@@ -79,20 +96,19 @@ func selectHandler(c *fiber.Ctx) error {
 	return c.JSON(result)
 }
 
-func initDB() {
+func initDB() error {
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, DB_SSLMODE)
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
 
-	err = db.Ping()
+	var err error
+	DB, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		return err
 	}
-
-	fmt.Println("Successfully connected!")
+	err = DB.Ping()
+	if err != nil {
+		return err
+	}
+	return nil
 }
