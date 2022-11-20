@@ -39,6 +39,12 @@ stringData:
         --dry-run -o yaml > db-secret.yaml
     ```
 
+    You will then find the values base64 encoded in the yaml file. You can decode them using the following command:
+
+    ```bash
+    echo -n "<base64 encoded value>" | base64 -d
+    ```
+
 Create a file called `db-deployment.yaml` with the following content:
 
 ```yaml
