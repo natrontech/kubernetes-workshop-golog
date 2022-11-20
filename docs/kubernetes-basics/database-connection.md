@@ -8,7 +8,7 @@ We've already created a Deployment.
 Now we will create another Deployment with a simple webserver that connects to the database. 
 Because the application needs credentials to connect to the database, we will use a Secret to store the credentials.
 
-Create a file called `db-secret.yaml` with the following content:
+Create a file called `db-secret.yaml` with the following content (make sure to replace the placeholders with your own values):
 
 ```yaml
 apiVersion: v1
@@ -30,12 +30,12 @@ stringData:
 
     ```bash
     kubectl create secret generic db-secret \
-        --from-literal=DB_USER=<username> \
-        --from-literal=DB_PASSWORD=<password> \
-        --from-literal=DB_NAME=<db name> \
-        --from-literal=DB_HOST=<db host> \
-        --from-literal=DB_PORT=5432 \
-        --from-literal=DB_SSLMODE=<disable/enable> \
+        --from-literal=DB_USER="<username>" \
+        --from-literal=DB_PASSWORD="<password>" \
+        --from-literal=DB_NAME="<db name>" \
+        --from-literal=DB_HOST="<db host>" \
+        --from-literal=DB_PORT="5432" \
+        --from-literal=DB_SSLMODE="<disable/enable>" \
         --dry-run -o yaml > db-secret.yaml
     ```
 
