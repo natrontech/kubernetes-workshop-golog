@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
+	"github.com/valyala/fasttemplate"
 )
 
 var (
@@ -31,8 +32,10 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("DB connected")
 
 	if !seeded {
+		log.Println("Seeding DB...")
 		_, err = DB.Exec("DROP TABLE IF EXISTS test")
 		if err != nil {
 			log.Fatal(err)
@@ -56,6 +59,7 @@ func init() {
 			}
 		}
 
+		log.Println("DB seeded")
 		seeded = true
 	}
 }
@@ -65,11 +69,52 @@ func main() {
 
 	app.Get("/select", selectHandler)
 
+	app.Get("/", indexHandler)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 	log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
+}
+
+func indexHandler(c *fiber.Ctx) error {
+	c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+
+	// get data from database
+	rows, err := DB.Query("SELECT * FROM test")
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	var resultString string
+	for rows.Next() {
+		var id int
+		var name string
+		err = rows.Scan(&id, &name)
+		if err != nil {
+			return err
+		}
+		resultString += fmt.Sprintf("ID: %v, Name: %v;", id, name)
+	}
+
+	// create template
+	rndr := fasttemplate.New(`<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Test</title>
+		</head>
+		<body>
+			<h1>Test Data found in database:</h1>
+			<p>{{.}}</p>
+		</body>
+	</html>`, "{{", "}}")
+
+	// render template
+	return c.SendString(rndr.ExecuteString(map[string]interface{}{
+		".": resultString,
+	}))
 }
 
 func selectHandler(c *fiber.Ctx) error {

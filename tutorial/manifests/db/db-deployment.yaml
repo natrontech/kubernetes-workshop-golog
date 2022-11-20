@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: test-postgresql-webserver
+  name: test-postgresql-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-postgresql-webserver
+  template:
+    metadata:
+      labels:
+        app: test-postgresql-webserver
+    spec:
+      containers:
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-test-postgresql-webserver:latest
+        name: test-postgresql-webserver
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            cpu: 20m
+            memory: 32Mi
+        envFrom:
+        - secretRef:
+            name: db-secret
