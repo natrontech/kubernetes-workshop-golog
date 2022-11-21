@@ -61,7 +61,7 @@ spec:
 
 Afterwards, create a file called `nfs-deployment.yaml` for an classic `nginx` webserver and try to attach the persistent volume claim at the mount path `/usr/share/nginx/html` to the Pod. 
 
-!!! example "solution"
+??? example "solution"
 
     ```yaml
     apiVersion: apps/v1
@@ -101,7 +101,7 @@ Afterwards, create a file called `nfs-deployment.yaml` for an classic `nginx` we
 
 Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to expose the webserver to the outside world.
 
-!!! example "solution"
+??? example "solution"
 
     ```yaml
     # nfs-service.yaml
