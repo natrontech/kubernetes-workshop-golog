@@ -108,6 +108,7 @@ nav:
     - Kustomize: 
       - kubernetes-basics/kustomize/index.md
   - Materials:
+    - materials/index.md
     - Credits: materials/credits.md
   # - Labs:
 
