@@ -21,7 +21,7 @@ In the concept of security context for a pod or container, there are severals th
 In this tutorial you will learn where to configure and how to use some of these types.
 
 ## :octicons-tasklist-16: **Task 1**: Access Control
-Create a new pod by using this example:
+Create a new pod `access-pod.yaml` by using this example:
 
 ```yaml
 apiVersion: v1
@@ -45,6 +45,12 @@ spec:
       mountPath: /data/demo
     securityContext:
       allowPrivilegeEscalation: false
+```
+
+Apply the file:
+
+```bash
+kubectl apply -f access-pod.yaml --namespace $NAMESPACE
 ```
 
 You can see the different value entries in the ‘securityContext’ section, let’s figure how what do they do. 
