@@ -1,6 +1,4 @@
 # Scaling Applications
-In this tutorial, we are going to show you how to scale applications on Kubernetes. 
-Furthermore, we show you how Kubernetes makes sure that the number of requested Pods is up and running and how an application can tell the platform that it is ready to receive requests.
 
 !!! reminder "Environment Variables"
 
@@ -12,6 +10,9 @@ Furthermore, we show you how Kubernetes makes sure that the number of requested 
     export URL=${NAMESPACE}.k8s.golog.ch
     echo $URL
     ```
+
+In this tutorial, we are going to show you how to scale applications on Kubernetes. 
+Furthermore, we show you how Kubernetes makes sure that the number of requested Pods is up and running and how an application can tell the platform that it is ready to receive requests.
 
 !!! note
 

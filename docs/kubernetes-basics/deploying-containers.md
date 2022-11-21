@@ -1,5 +1,4 @@
 # Deploying Containers
-In this tutorial, we are going to deploy our first container image and look at the concepts of Pods, Services, and Deployments.
 
 !!! reminder "Environment Variables"
 
@@ -9,6 +8,8 @@ In this tutorial, we are going to deploy our first container image and look at t
     export NAMESPACE=<namespace>
     echo $NAMESPACE
     ```
+
+In this tutorial, we are going to deploy our first container image and look at the concepts of Pods, Services, and Deployments.
 
 ## :octicons-tasklist-16: **Task 1**: Start and stop a single Pod
 After we’ve familiarized ourselves with the platform, we are going to have a look at deploying a pre-built container image or any other public container registry.

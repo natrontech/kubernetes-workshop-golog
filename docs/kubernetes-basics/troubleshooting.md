@@ -1,5 +1,14 @@
 # Troubleshooting
 
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 This tutorial will help you troubleshoot your application and show you some tools that can make troubleshooting easier.
 
 ## Logging into a container
@@ -14,10 +23,10 @@ With Kubernetes you can open a remote shell into a Pod without installing SSH by
 
     On Windows, you can use Git Bash and `winpty`.
 
-Choose a Pod with `kubectl get pods --namespace <namespace>` and execute the following command:
+Choose a Pod with `kubectl get pods --namespace $NAMESPACE` and execute the following command:
 
 ```bash
-kubectl exec -it <pod> --namespace <namespace> -- /bin/sh
+kubectl exec -it <pod> --namespace $NAMESPACE -- /bin/sh
 ```
 
 !!! note
@@ -44,14 +53,14 @@ With `exit` or `CTRL+d` you can leave the container and close the connection:
 Single commands inside a container can also be executed with `kubectl exec`:
 
 ```bash
-kubectl exec <pod> --namespace <namespace> -- env
+kubectl exec <pod> --namespace $NAMESPACE -- env
 ```
 
 ### Watching log files
 Log files of a Pod can be shown with the following command:
 
 ```bash
-kubectl logs <pod> --namespace <namespace>
+kubectl logs <pod> --namespace $NAMESPACE
 ```
 
 The parameter `-f` allows you to follow the log file (same as `tail -f`). With this, log files are streamed and new entries are shown immediately.
@@ -59,7 +68,7 @@ The parameter `-f` allows you to follow the log file (same as `tail -f`). With t
 When a Pod is in state `CrashLoopBackOff` it means that although multiple attempts have been made, no container inside the Pod could be started successfully. Now even though no container might be running at the moment the `kubectl log`s command is executed, there is a way to view the logs the application might have generated. This is achieved using the `-p` or `--previous` parameter:
 
 ```bash
-kubectl logs <pod> --namespace <namespace> -p
+kubectl logs <pod> --namespace $NAMESPACE -p
 ```
 
 ## :octicons-tasklist-16: **Task 3**: Port forwarding
@@ -68,13 +77,13 @@ Kubernetes allows you to forward arbitrary ports to your development workstation
 Get the name of the Pod:
 
 ```bash
-kubectl get pods --namespace <namespace>
+kubectl get pods --namespace $NAMESPACE
 ```
 
 Then execute the port forwarding command using the Pod’s name:
 
 ```bash
-kubectl port-forward <pod> 8080:8080 --namespace <namespace>
+kubectl port-forward <pod> 8080:8080 --namespace $NAMESPACE
 ```
 
 !!! note
@@ -110,7 +119,7 @@ Kubernetes maintains an event log with high-level information on what’s going 
 Use the following command to list the events in chronological order:
 
 ```bash
-kubectl get events --sort-by=.metadata.creationTimestamp --namespace <namespace>
+kubectl get events --sort-by=.metadata.creationTimestamp --namespace $NAMESPACE
 ```
 
 ## Dry-run

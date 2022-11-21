@@ -1,7 +1,5 @@
 # Exposing Services
 
-In this module, you'll learn how to expose an application to the outside world.
-
 !!! reminder "Environment Variables"
 
     We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
@@ -12,6 +10,8 @@ In this module, you'll learn how to expose an application to the outside world.
     export URL=${NAMESPACE}.k8s.golog.ch
     echo $URL
     ```
+
+In this module, you'll learn how to expose an application to the outside world.
 
 ## :octicons-tasklist-16: **Task 1**: Create a NodePort Service with an Ingress
 The command `kubectl apply -f deployment.yaml `from the last tutorial creates a Deployment but no Service. A Kubernetes Service is an abstract way to expose an application running on a set of Pods as a network service. For some parts of your application (for example, frontends) you may want to expose a Service to an external IP address which is outside your cluster.
