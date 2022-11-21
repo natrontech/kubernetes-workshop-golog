@@ -1,6 +1,6 @@
 # Init Containers
 
-!!! reminder "Environment Variables"
+!!! warning "Environment Variables"
 
     We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
     ```bash

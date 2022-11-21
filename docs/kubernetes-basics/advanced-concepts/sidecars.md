@@ -1,4 +1,14 @@
 # Sidecar Containers
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 Let’s first have another look at the Pod’s description on the [Kubernetes documentation page](https://kubernetes.io/docs/concepts/workloads/pods/pod/):
 
 !!! quote
@@ -77,13 +87,13 @@ spec:
 Apply the file:
 
 ```bash
-kubectl apply -f sidecar-pod.yaml --namespace <namespace>
+kubectl apply -f sidecar-pod.yaml --namespace $NAMESPACE
 ```
 
 Check the logs of the `logreader` container:
 
 ```bash
-kubectl logs sidecar-demo logreader --namespace <namespace> --follow
+kubectl logs sidecar-demo logreader --namespace $NAMESPACE --follow
 ```
 
 You should see the log file being printed to stdout every second.
