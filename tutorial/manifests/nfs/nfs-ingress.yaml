@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: test-postgresql-webserver
+  name: nfs-webserver
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
@@ -11,7 +11,7 @@ spec:
   tls:
   - hosts:
     - test.k8s.golog.ch
-    secretName: test-postgresql-webserver-tls
+    secretName: nfs-webserver-tls
   rules:
   - host: test.k8s.golog.ch
     http:
@@ -20,6 +20,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: test-postgresql-webserver
+            name: nfs-webserver
             port:
-              number: 8080
+              number: 80

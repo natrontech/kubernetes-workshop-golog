@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nfs-webserver
+  name: nfs-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-webserver
+  template:
+    metadata:
+      labels:
+        app: nfs-webserver
+    spec:
+      containers:
+      - image: nginx
+        name: nfs-webserver
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            cpu: 20m
+            memory: 32Mi
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: webserver
+      volumes:
+      - name: webserver
+        persistentVolumeClaim:
+          claimName: webserver-pvc
