@@ -42,7 +42,8 @@ test-webserver-6564f9788b   1         1         1       54s
 Or for even more details:
 
 ```bash
-kubectl get replicaset <replicaset> -o yaml --namespace $NAMESPACE
+export REPLICASET=$(kubectl get replicasets --namespace $NAMESPACE -o jsonpath="{.items[0].metadata.name}")
+kubectl get replicaset $REPLICASET -o yaml --namespace $NAMESPACE
 ```
 
 The ReplicaSet shows how many instances of a Pod are desired, current and ready.
@@ -92,7 +93,7 @@ Now, execute the corresponding loop command for your operating system in another
 **Linux/MacOS**
 
 ```bash
-while true; do sleep 1; curl -s https://${URL}/pod/; date "+ TIME: %H:%M:%S,%3N"; done
+while true; do sleep 1; curl -s "https://${URL}/pod/" ; date "+ TIME: %H:%M:%S,%3N"; done
 ```
 
 **Windows**
@@ -235,8 +236,7 @@ Set up the loop again to periodically check the application’s response (you do
 **Linux/MacOS**
 
 ```bash
-URL=test.k8s.golog.ch
-while true; do sleep 1; curl -s https://${URL}/pod/; date "+ TIME: %H:%M:%S,%3N"; done
+while true; do sleep 1; curl -s "https://$URL/pod/" ; date "+ TIME: %H:%M:%S,%3N"; done
 ```
 
 **Windows**
