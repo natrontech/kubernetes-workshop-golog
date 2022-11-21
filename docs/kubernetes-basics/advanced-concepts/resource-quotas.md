@@ -168,3 +168,13 @@ spec:
   - name: lr-demo-ctr
     image: bretfisher/stress:2cpu1024m
 EOF
+```
+
+Do you see any problems with the Pod? If not, let’s have a look at the events:
+
+```bash
+kubectl get pods -n $NAMESPACE
+kubectl get events -n $NAMESPACE
+```
+
+See the error message? It says that the Pod is in a state of `OOMKilled` which stands for “Out of Memory Killed”. This is because the Pod requested more memory than the ResourceQuota allows. The Pod was killed by the scheduler.
