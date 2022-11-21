@@ -91,7 +91,7 @@ nav:
       - StatefulSets: kubernetes-basics/advanced-concepts/statefulsets.md
       - DaemonSets: kubernetes-basics/advanced-concepts/daemonsets.md
       - Jobs and CronJobs: kubernetes-basics/advanced-concepts/jobs-and-cronjobs.md
-      - ConfigMaps and Secrets: kubernetes-basics/advanced-concepts/configmaps.md
+      - ConfigMaps: kubernetes-basics/advanced-concepts/configmaps.md
       - ResourceQuotas and Limits: kubernetes-basics/advanced-concepts/resource-quotas.md
       - Init Containers: kubernetes-basics/advanced-concepts/init-containers.md
       - Sidecars: kubernetes-basics/advanced-concepts/sidecars.md

@@ -14,3 +14,6 @@ This section lists some of the most common tools.
 ## minikube
 To install minikube you need docker or podman installed on your machine.
 [minikube](https://minikube.sigs.k8s.io/) is a tool that can help you run a single-node Kubernetes cluster locally.
+
+## GitBash
+[GitBash](https://gitforwindows.org/) is a tool that can help you run bash commands on Windows.
