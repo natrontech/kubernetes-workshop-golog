@@ -13,4 +13,4 @@ Apply some deployment strategies to the application which we deployed in the pre
 
 *for example:*
 
-- [Scaling Applications](./scaling-applications.md)
+- [Scaling Applications](../scaling-applications.md)
