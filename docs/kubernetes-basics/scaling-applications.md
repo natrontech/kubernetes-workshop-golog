@@ -2,6 +2,17 @@
 In this tutorial, we are going to show you how to scale applications on Kubernetes. 
 Furthermore, we show you how Kubernetes makes sure that the number of requested Pods is up and running and how an application can tell the platform that it is ready to receive requests.
 
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    export URL=${NAMESPACE}.k8s.golog.ch
+    echo $URL
+    ```
+
 !!! note
 
     This tutorial is based on previous tutorials. If you haven’t done so, please complete the following tutorials:
@@ -12,13 +23,13 @@ Furthermore, we show you how Kubernetes makes sure that the number of requested 
 ## :octicons-tasklist-16: **Task 1**: Scale the test-webserver application
 Create a new Deployment in your Namespace. 
 So again, lets use the Deployment `deployment.yaml` which we created in the previous tutorial [Deploying Containers](./deploying-containers.md).
-Make sure that everything is up and running by using `kubectl get pods --namespace <namespace>`.
+Make sure that everything is up and running by using `kubectl get pods --namespace $NAMESPACE`.
 
 If we want to scale our example application, we have to tell the Deployment that we want to have three running replicas instead of one. 
 Let’s have a closer look at the existing ReplicaSet:
 
 ```bash
-kubectl get replicasets --namespace <namespace>
+kubectl get replicasets --namespace $NAMESPACE
 ```
 
 Which will give you an output similar to this:
@@ -31,7 +42,7 @@ test-webserver-6564f9788b   1         1         1       54s
 Or for even more details:
 
 ```bash
-kubectl get replicaset <replicaset> -o yaml --namespace <namespace>
+kubectl get replicaset <replicaset> -o yaml --namespace $NAMESPACE
 ```
 
 The ReplicaSet shows how many instances of a Pod are desired, current and ready.
@@ -39,13 +50,13 @@ The ReplicaSet shows how many instances of a Pod are desired, current and ready.
 Now we scale our application to three replicas:
 
 ```bash
-kubectl scale deployment test-webserver --replicas=3 --namespace <namespace>
+kubectl scale deployment test-webserver --replicas=3 --namespace $NAMESPACE
 ```
 
 Check the number of desired, current and ready replicas:
 
 ```bash
-kubectl get replicasets --namespace <namespace>
+kubectl get replicasets --namespace $NAMESPACE
 ```
 
 ```bash
@@ -56,7 +67,7 @@ test-webserver-6564f9788b   3         3         3       3m23s
 Look at how many Pods there are:
 
 ```bash
-kubectl get pods --namespace <namespace>
+kubectl get pods --namespace $NAMESPACE
 ```
 
 Which gives you an output similar to this:
@@ -81,7 +92,6 @@ Now, execute the corresponding loop command for your operating system in another
 **Linux/MacOS**
 
 ```bash
-URL=test.k8s.golog.ch
 while true; do sleep 1; curl -s https://${URL}/pod/; date "+ TIME: %H:%M:%S,%3N"; done
 ```
 
@@ -90,7 +100,7 @@ while true; do sleep 1; curl -s https://${URL}/pod/; date "+ TIME: %H:%M:%S,%3N"
 ```powershell
 while(1) {
   Start-Sleep -s 1
-  Invoke-RestMethod https://test.k8s.golog.ch/pod/
+  Invoke-RestMethod https://<namespace>.k8s.golog.ch/pod/
   Get-Date -Uformat "+ TIME: %H:%M:%S,%3N"
 }
 ```
@@ -100,7 +110,7 @@ Scale from 3 replicas to 1. The output shows which Pod is still alive and is res
 ??? example "solution"
 
     ```bash
-    kubectl scale deployment test-webserver --replicas=1 --namespace <namespace>
+    kubectl scale deployment test-webserver --replicas=1 --namespace $NAMESPACE
     ```
 
 The requests get distributed amongst the three Pods. As soon as you scale down to one Pod, there should be only one remaining Pod that responds.
@@ -108,7 +118,7 @@ The requests get distributed amongst the three Pods. As soon as you scale down t
 Let’s make another test: What happens if you start a new Deployment while our request generator is still running?
 
 ```bash
-kubectl rollout restart deployment test-webserver --namespace <namespace>
+kubectl rollout restart deployment test-webserver --namespace $NAMESPACE
 ```
 
 During a short period of time, you will see that we won’t get any response from the Service:
@@ -168,7 +178,7 @@ Liveness probes are used to find out if an application is still running
 Readiness probes tell us if the application is ready to receive requests (which is especially relevant for the above-mentioned rolling updates)
 These probes can be implemented as HTTP checks, container execution checks (the execution of a command or script inside a container) or TCP socket checks.
 
-In our example, we want the application to tell Kubernetes that it is ready for requests with an appropriate readiness probe. Our example application has a health check context named health: `https:///https://test.k8s.golog.ch/health`
+In our example, we want the application to tell Kubernetes that it is ready for requests with an appropriate readiness probe. Our example application has a health check context named health: `https:///<namespace>.k8s.golog.ch/health`
 
 ## :octicons-tasklist-16: **Task 2**: Availability during deployment
 In our deployment configuration inside the rolling update strategy section, we define that our application always has to be available during an update: `maxUnavailable: 0`
@@ -176,7 +186,7 @@ In our deployment configuration inside the rolling update strategy section, we d
 You can directly edit the deployment (or any resource) with:
 
 ```bash
-kubectl edit deployment test-webserver --namespace <namespace>
+kubectl edit deployment test-webserver --namespace $NAMESPACE
 ```
 
 !!! note
@@ -242,7 +252,7 @@ while(1) {
 Start a new deployment by editing it (the so-called *ConfigChange* trigger creates the new Deployment automatically):
 
 ```bash
-kubectl patch deployment test-webserver --patch "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}" --namespace <namespace>
+kubectl patch deployment test-webserver --patch "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}" --namespace $NAMESPACE
 ```
 
 ### Self-healing
@@ -253,13 +263,13 @@ Look for a running Pod (status `RUNNING`) that you can bear to kill via `kubectl
 Show all Pods and watch for changes:
 
 ```bash
-kubectl get pods -w --namespace <namespace>
+kubectl get pods -w --namespace $NAMESPACE
 ```
 
 Now delete a Pod (in another terminal) with the following command:
 
 ```bash
-kubectl delete pod <pod-name> --namespace <namespace>
+kubectl delete pod <pod-name> --namespace $NAMESPACE
 ```
 
 You should see that Kubernetes immediately starts a new Pod to replace the deleted one.
