@@ -20,9 +20,15 @@ We've already created a Deployment.
 Now we will create another Deployment with a simple webserver that connects to the database. 
 Because the application needs credentials to connect to the database, we will use a Secret to store the credentials.
 
+!!! warning "Database Credentials"
+
+    If there is no `access.yaml` file at your home dir on the db server, create a new user and new database.  
+    Note the username and password of the new user.
+
 Create a file called `db-secret.yaml` with the following content (make sure to replace the placeholders with your own values):
 
 ```yaml
+# get secrets from wiki
 apiVersion: v1
 kind: Secret
 metadata:
