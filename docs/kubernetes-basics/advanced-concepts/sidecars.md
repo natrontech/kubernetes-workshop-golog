@@ -16,7 +16,7 @@ In a sidecar pattern, the functionality of the main container is extended or enh
 - Independent testing, packaging, upgrade, deployment and if necessary rollback
 
 ## :octicons-tasklist-16: **Task 1**: Create a sidecar container
-We want to create a Pod that runs a sidecar container that reads a log file and prints it to stdout. The main container writes a log file every 10 seconds.
+We want to create a Pod that runs a sidecar container that reads a log file and prints it to stdout. The main container writes a log file every seconds.
 
 Create a file called `sidecar-pod.yaml` with the following content:
 
