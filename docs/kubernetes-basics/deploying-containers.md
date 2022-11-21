@@ -1,7 +1,7 @@
 # Deploying Containers
 In this tutorial, we are going to deploy our first container image and look at the concepts of Pods, Services, and Deployments.
 
-!!! success "Environment Variables"
+!!! reminder "Environment Variables"
 
     We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
     ```bash
