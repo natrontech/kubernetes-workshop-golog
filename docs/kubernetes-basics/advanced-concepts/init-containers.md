@@ -1,4 +1,14 @@
 # Init Containers
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 A Pod can have multiple containers running apps within it, but it can also have one or more init containers, which are run before the app container is started.
 
 Init containers are exactly like regular containers, except:
@@ -50,13 +60,13 @@ spec:
 Apply the file:
 
 ```bash
-kubectl apply -f init-container.yaml --namespace <namespace>
+kubectl apply -f init-container.yaml --namespace $NAMESPACE
 ```
 
 Check the status of the Pod:
 
 ```bash
-kubectl get pod init-demo --namespace <namespace>
+kubectl get pod init-demo --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -71,7 +81,7 @@ The Pod is in the `Init:0/1` state, which means that the init container is runni
 Check the `/usr/share/nginx/html/index.html` file in the `nginx` container:
 
 ```bash
-kubectl exec -it init-demo --namespace <namespace> -- cat /usr/share/nginx/html/index.html
+kubectl exec -it init-demo --namespace $NAMESPACE -- cat /usr/share/nginx/html/index.html
 ```
 
 The output should look like this:
@@ -138,13 +148,13 @@ spec:
 Apply the file:
 
 ```bash
-kubectl apply -f init-deployment.yaml --namespace <namespace>
+kubectl apply -f init-deployment.yaml --namespace $NAMESPACE
 ```
 
 Check the status of the Deployment:
 
 ```bash
-kubectl get deployment init-deployment --namespace <namespace>
+kubectl get deployment init-deployment --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -159,5 +169,5 @@ The Deployment is in the `Init:0/1` state, which means that the init container i
 Check the logs of the init container:
 
 ```bash
-kubectl logs <init pod> -c pg-isready --namespace <namespace>
+kubectl logs <init pod> -c pg-isready --namespace $NAMESPACE
 ```
