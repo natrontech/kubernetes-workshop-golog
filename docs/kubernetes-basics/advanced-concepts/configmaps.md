@@ -150,10 +150,17 @@ spec:
           name: config-volume
 ```
 
+Deploy it:
+
+```bash
+kubectl apply -f java-deployment.yaml --namespace $NAMESPACE
+```
+
 This means that the container should now be able to access the ConfigMap’s content in `/etc/config/java.properties`. Let’s check:
 
 ```bash
-kubectl exec -it <pod> --namespace $NAMESPACE -- cat /etc/config/java.properties
+export POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "app=spring-boot-example" -o jsonpath="{.items[0].metadata.name}")
+kubectl exec -it $POD_NAME --namespace $NAMESPACE -- cat /etc/config/java.properties
 ```
 
 !!! note
@@ -255,7 +262,8 @@ You can refer to the [official documentation](https://kubernetes.io/docs/tasks/c
     Check the environment variables of the container:
 
     ```bash
-    kubectl exec -it <pod> --namespace $NAMESPACE -- env
+    export POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "app=spring-boot-example" -o jsonpath="{.items[0].metadata.name}")
+    kubectl exec -it $POD_NAME --namespace $NAMESPACE -- env
     ```
 
     The output should look like this:
