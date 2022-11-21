@@ -6,7 +6,7 @@ In this tutorial, we are going to deploy our first container image and look at t
     We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
     ```bash
     # check if the environment variables are set if not set them
-    export NAMESPACE=$NAMESPACE
+    export NAMESPACE=<namespace>
     echo $NAMESPACE
     ```
 

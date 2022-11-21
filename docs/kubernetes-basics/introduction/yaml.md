@@ -1,4 +1,4 @@
-# YALM
+# YAML
 **YAML Ain’t Markup Language** (YAML) is a human-readable data-serialization language. 
 YAML is not a programming language. 
 It is mostly used for storing configuration information.
