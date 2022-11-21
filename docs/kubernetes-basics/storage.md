@@ -177,6 +177,7 @@ Now you can deploy everything in order to test it.
 
 ```bash
 kubectl apply -f nfs-pv.yaml --namespace $NAMESPACE
+kubectl apply -f nfs-pvc.yaml --namespace $NAMESPACE
 kubectl apply -f nfs-deployment.yaml --namespace $NAMESPACE
 kubectl apply -f nfs-service.yaml --namespace $NAMESPACE
 kubectl apply -f nfs-ingress.yaml --namespace $NAMESPACE
@@ -230,7 +231,8 @@ Now we can visit the webserver and see that the file was created successfully.
 Now we can delete the Pod and see that the file is still there. This is because the file is stored on the NFS server and not in the Pod.
 
 ```bash
-kubectl delete pod nfs-webserver-<pod-id> --namespace $NAMESPACE
+export POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l app=nfs-webserver -o jsonpath="{.items[0].metadata.name}")
+kubectl delete pod $POD_NAME --namespace $NAMESPACE
 ```
 
 Now we can visit the webserver and see that the file is still there.
