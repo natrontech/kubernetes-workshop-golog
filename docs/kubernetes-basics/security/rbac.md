@@ -1,4 +1,14 @@
 # RBAC
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 Role-based access control (RBAC) is a method of regulating access to computer or network resources based on the roles of individual users within your organization.
 RBAC allows management of users and roles, where a role is a collection of permissions to access resources. Users can be assigned to multiple roles and permissions can be reused across multiple roles.
 
@@ -10,7 +20,6 @@ A Service Account is an account that is used by applications to interact with th
 In this task, you will create a Service Account named `app`
 
 ```bash
-export NAMESPACE=<namespace>
 kubectl create serviceaccount app --namespace $NAMESPACE
 ```
 

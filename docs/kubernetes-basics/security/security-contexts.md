@@ -1,5 +1,14 @@
 # Security Contexts
 
+!!! warning "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 In the concept of security context for a pod or container, there are severals thing to consider:
 
 - Access control
@@ -42,7 +51,7 @@ You can see the different value entries in the ‘securityContext’ section, le
 So create the pod and connect into the shell:
 
 ```bash
-kubectl exec -it security-context-demo --namespace <namespace> -- sh
+kubectl exec -it security-context-demo --namespace $NAMESPACE -- sh
 ```
 
 In the container run `ps` to get a list of all running processes. The output shows, that the processes are running with the user `1000`, which is the value from `runAsUser`:

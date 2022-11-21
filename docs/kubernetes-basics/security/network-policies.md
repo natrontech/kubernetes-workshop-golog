@@ -244,3 +244,7 @@ command terminated with exit code 28
 curl: (28) Connection timed out after 5001 milliseconds
 command terminated with exit code 28
 ```
+
+## Further reading
+
+Check out the awesome [Kubernetes Network Policy Receipes](https://github.com/ahmetb/kubernetes-network-policy-recipes) repository for a lot of examples on how to use Kubernetes Network Policies.
