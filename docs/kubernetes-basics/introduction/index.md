@@ -5,6 +5,14 @@ Please check the official documentation for more details.
 
 - [Kubernetes Docs](https://kubernetes.io/docs/home/)
 
+**Certifications**
+
+You can also get certified by passing the following exams:
+
+- [CKA](https://www.cncf.io/certification/cka/)
+- [CKAD](https://www.cncf.io/certification/ckad/)
+- [CKS](https://www.cncf.io/certification/cks/)
+
 ## Core idea 
 With open-source software Kubernetes, you get a platform that can deploy your application in containers and run it simultaneously.  
 For this reason, Kubernetes is also known as a container platform, or to use the term container as a service (CaaS).  
