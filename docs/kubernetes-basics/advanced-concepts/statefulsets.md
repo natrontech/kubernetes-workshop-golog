@@ -1,4 +1,14 @@
 # StatefulSets
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 Stateless applications or applications with a stateful backend can be described as Deployments. However, sometimes your application has to be stateful. Examples would be an application that needs a static, non-changing hostname every time it starts or a clustered application with a strict start/stop order of its services (e.g. RabbitMQ). These features are offered by StatefulSets.
 
 !!! note
@@ -19,7 +29,7 @@ Scaling is handled differently in StatefulSets. When scaling up from 3 to 5 repl
 
 Let’s use our RabbitMQ example again:
 
-1. The StatefulSet is scaled up using: `kubectl scale deployment rabbitmq --replicas=5 --namespace <namespace>`
+1. The StatefulSet is scaled up using: `kubectl scale deployment rabbitmq --replicas=5 --namespace $NAMESPACE`
 2. `rabbitmq-3` is started
 3. As soon as Pod `rabbitmq-3` is in `Ready` state the same procedure starts for `rabbitmq-4`
 
@@ -78,13 +88,13 @@ spec:
 Create the StatefulSet:
 
 ```bash
-kubectl apply -f sts_nginx-cluster.yaml --namespace <namespace>
+kubectl apply -f sts_nginx-cluster.yaml --namespace $NAMESPACE
 ```
 
 To watch the pods’ progress, open a second console and execute the watch command:
 
 ```bash
-kubectl get pods --selector app=nginx -w --namespace <namespace>
+kubectl get pods --selector app=nginx -w --namespace $NAMESPACE
 ```
 
 !!! note
@@ -95,7 +105,7 @@ kubectl get pods --selector app=nginx -w --namespace <namespace>
 Scale the StatefulSet up:
 
 ```bash
-kubectl scale statefulset nginx-cluster --replicas=3 --namespace <namespace>
+kubectl scale statefulset nginx-cluster --replicas=3 --namespace $NAMESPACE
 ```
 
 You can again watch the pods’ progress like you did in the first task.
@@ -104,14 +114,14 @@ You can again watch the pods’ progress like you did in the first task.
 In order to update the image tag in use in a StatefulSet, you can use the `kubectl set image` command. Set the StatefulSet’s image tag to `latest`:
 
 ```bash
-kubectl set image statefulset nginx-cluster nginx=docker.io/nginxinc/nginx-unprivileged:latest --namespace <namespace>
+kubectl set image statefulset nginx-cluster nginx=docker.io/nginxinc/nginx-unprivileged:latest --namespace $NAMESPACE
 ```
 
 ## :octicons-tasklist-16: **Task 4**: Rollback
 Imagine you just realized that switching to the `latest` image tag was an awful idea (because it is generally not advisable). Rollback the change:
 
 ```bash
-kubectl rollout undo statefulset nginx-cluster --namespace <namespace>
+kubectl rollout undo statefulset nginx-cluster --namespace $NAMESPACE
 ```
 
 ## :octicons-tasklist-16: **Task 5**: Cleanup
@@ -119,7 +129,7 @@ kubectl rollout undo statefulset nginx-cluster --namespace <namespace>
 As with every other Kubernetes resource you can delete the StatefulSet with:
 
 ```bash
-kubectl delete statefulset nginx-cluster --namespace <namespace>
+kubectl delete statefulset nginx-cluster --namespace $NAMESPACE
 ```
 
 Further information can be found in the [Kubernetes’ StatefulSet documentation](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/) or this [published article](https://opensource.com/article/17/2/stateful-applications).
