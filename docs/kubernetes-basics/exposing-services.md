@@ -10,6 +10,7 @@ In this module, you'll learn how to expose an application to the outside world.
     export NAMESPACE=<namespace>
     echo $NAMESPACE
     export URL=${NAMESPACE}.k8s.golog.ch
+    echo $URL
     ```
 
 ## :octicons-tasklist-16: **Task 1**: Create a NodePort Service with an Ingress
