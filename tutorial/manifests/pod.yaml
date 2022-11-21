@@ -4,7 +4,7 @@ metadata:
   name: test-webserver
 spec:
   containers:
-  - image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest
+  - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-webserver:latest
     imagePullPolicy: Always
     name: test-webserver
     resources:
