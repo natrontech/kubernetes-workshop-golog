@@ -1,5 +1,16 @@
 # Storage
 
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    export URL=${NAMESPACE}.k8s.golog.ch
+    echo $URL
+    ```
+
 By default, data in containers is not persistent as was the case e.g. in [Database Connection](./database-connection.md). This means that data that was written in a container is lost as soon as it does not exist anymore. We want to prevent this from happening. One possible solution to this problem is to use persistent storage.
 
 ## Request storage
@@ -147,16 +158,24 @@ Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to ex
                   number: 80
     ```
 
-Now you can deploy everything in order to test it.
-
-!!! example "solution"
+!!! note "Ingress"
+    
+    Before you can deploy the Ingress, make sure you delete the old one. Otherwise you will get an error message.
 
     ```bash
-    kubectl apply -f nfs-pv.yaml --namespace <namespace>
-    kubectl apply -f nfs-deployment.yaml --namespace <namespace>
-    kubectl apply -f nfs-service.yaml --namespace <namespace>
-    kubectl apply -f nfs-ingress.yaml --namespace <namespace>
+    kubectl get ingress --namespace $NAMESPACE
+    kubectl delete ingress <ingress> --namespace $NAMESPACE
     ```
+
+Now you can deploy everything in order to test it.
+
+
+```bash
+kubectl apply -f nfs-pv.yaml --namespace $NAMESPACE
+kubectl apply -f nfs-deployment.yaml --namespace $NAMESPACE
+kubectl apply -f nfs-service.yaml --namespace $NAMESPACE
+kubectl apply -f nfs-ingress.yaml --namespace $NAMESPACE
+```
 
 Describe the Persistent Volume Claim to see if it was created successfully.
 
@@ -166,7 +185,7 @@ When we now visit the webserver, we will see that we get a `403 Forbidden` error
 There are multiple ways to do this. One way is to use the `kubectl exec` command. This command allows us to execute a command in a running container. We can use this to open a shell in the container.
 
 ```bash
-kubectl exec -it nfs-webserver-<pod-id> -- /bin/bash --namespace <namespace>
+kubectl exec -it nfs-webserver-<pod-id> -- /bin/bash --namespace $NAMESPACE
 ```
 
 Because there is no editor installed in the container, we simply use `echo` to create a file.
@@ -180,7 +199,7 @@ echo "<h1>Hello World</h1>" > /usr/share/nginx/html/index.html
     You can also execute the `echo` command directly in the `kubectl exec` command.
 
     ```bash
-    kubectl exec -it nfs-webserver-<pod-id> --namespace <namespace> -- /bin/bash -c "echo '<h1>Hello World</h1>' > /usr/share/nginx/html/index.html"
+    kubectl exec -it nfs-webserver-<pod-id> --namespace $NAMESPACE -- /bin/bash -c "echo '<h1>Hello World</h1>' > /usr/share/nginx/html/index.html"
     ```
 
 Now we can visit the webserver and see that the file was created successfully.
@@ -196,7 +215,7 @@ echo "<h1>Hello World</h1>" > index.html
 Then we can copy the file to the container.
 
 ```bash
-kubectl cp index.html nfs-webserver-<pod-id>:/usr/share/nginx/html/index.html --namespace <namespace>
+kubectl cp index.html nfs-webserver-<pod-id>:/usr/share/nginx/html/index.html --namespace $NAMESPACE
 ```
 
 Now we can visit the webserver and see that the file was created successfully.
@@ -206,7 +225,7 @@ Now we can visit the webserver and see that the file was created successfully.
 Now we can delete the Pod and see that the file is still there. This is because the file is stored on the NFS server and not in the Pod.
 
 ```bash
-kubectl delete pod nfs-webserver-<pod-id> --namespace <namespace>
+kubectl delete pod nfs-webserver-<pod-id> --namespace $NAMESPACE
 ```
 
 Now we can visit the webserver and see that the file is still there.
