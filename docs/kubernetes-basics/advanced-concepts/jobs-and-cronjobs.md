@@ -72,7 +72,7 @@ spec:
 
 The Job uses the `postgres:14.5` image to create a database dump. The database password credentials are stored in a secret called `job-secret`. The Job is configured to run only once and then terminate.
 
-Create the secret file `secret.yaml` with the following content:
+Create the secret file `job-secret.yaml` with the following content:
 
 ```yaml
 apiVersion: v1
@@ -86,7 +86,7 @@ stringData:
 Execute the following commands to create the Job and the secret:
 
 ```bash
-kubectl apply -f secret.yaml --namespace $NAMESPACE
+kubectl apply -f job-secret.yaml --namespace $NAMESPACE
 kubectl apply -f job.yaml --namespace $NAMESPACE
 ```
 
