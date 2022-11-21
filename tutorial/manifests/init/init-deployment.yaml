@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: init-deployment
+  name: init-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: init-deployment
+  template:
+    metadata:
+      labels:
+        app: init-deployment
+    spec:
+      initContainers:
+      - name: pg-isready
+        image: postgres:14.5
+        command: 
+          - 'sh'
+          - '-c'
+          - |
+            until pg_isready -h <postgresql host> -p 5432; do
+              echo "waiting for database to start"
+              sleep 2
+            done
+          - 'echo'
+          - 'Database is ready'
+      containers:
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-test-postgresql-webserver:latest
+        name: init-deployment
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            cpu: 20m
+            memory: 32Mi
+        envFrom:
+        - secretRef:
+            name: db-secret
