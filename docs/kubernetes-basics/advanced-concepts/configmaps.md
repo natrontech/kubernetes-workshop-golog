@@ -1,10 +1,20 @@
 # Configmaps
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 Similar to environment variables, ConfigsMaps allow you to separate the configuration for an application from the image. Pods can access those variables at runtime which allows maximum portability for applications running in containers. In this lab, you will learn how to create and use ConfigMaps.
 
 A ConfigMap can be created using the `kubectl create configmap` command as follows:
 
 ```bash
-kubectl create configmap <name> <data-source> --namespace <namespace>
+kubectl create configmap <name> <data-source> --namespace $NAMESPACE
 ```
 
 Where the `<data-source>` can be a file, directory, or command line input.
@@ -23,13 +33,13 @@ key2=value2
 Now you can create a ConfigMap based on that file:
 
 ```bash
-kubectl create configmap javaconfiguration --from-file=./java.properties --namespace <namespace>
+kubectl create configmap javaconfiguration --from-file=./java.properties --namespace $NAMESPACE
 ```
 
 Verify that the ConfigMap was created successfully:
 
 ```bash
-kubectl get configmaps --namespace <namespace>
+kubectl get configmaps --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -42,7 +52,7 @@ javaconfiguration   1      2m
 Have a look at its content:
 
 ```bash
-kubectl get configmap javaconfiguration -o yaml --namespace <namespace>
+kubectl get configmap javaconfiguration -o yaml --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -143,12 +153,12 @@ spec:
 This means that the container should now be able to access the ConfigMap’s content in `/etc/config/java.properties`. Let’s check:
 
 ```bash
-kubectl exec -it <pod> --namespace <namespace> -- cat /etc/config/java.properties
+kubectl exec -it <pod> --namespace $NAMESPACE -- cat /etc/config/java.properties
 ```
 
 !!! note
 
-    On Windows, you can use Git Bash with `winpty kubectl exec -it <pod> --namespace <namespace> -- cat //etc/config/java.properties`.
+    On Windows, you can use Git Bash with `winpty kubectl exec -it <pod> --namespace $NAMESPACE -- cat //etc/config/java.properties`.
 
 The output should look like this:
 
@@ -170,7 +180,7 @@ You can refer to the [official documentation](https://kubernetes.io/docs/tasks/c
 ??? example "solutions"
 
     ```bash
-    kubectl create configmap javaenv --from-literal=JAVA_OPTS=-Xmx512m --from-literal=JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 --namespace <namespace>
+    kubectl create configmap javaenv --from-literal=JAVA_OPTS=-Xmx512m --from-literal=JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8 --namespace $NAMESPACE
     ```
 
     Update the `java-deployment.yaml` file with the following content:
@@ -233,19 +243,19 @@ You can refer to the [official documentation](https://kubernetes.io/docs/tasks/c
     Make sure you delete the old deployment first:
 
     ```bash
-    kubectl delete deployment spring-boot-example --namespace <namespace>
+    kubectl delete deployment spring-boot-example --namespace $NAMESPACE
     ```
 
     Then, create the new deployment:
 
     ```bash
-    kubectl create -f java-deployment.yaml --namespace <namespace>
+    kubectl create -f java-deployment.yaml --namespace $NAMESPACE
     ```
 
     Check the environment variables of the container:
 
     ```bash
-    kubectl exec -it <pod> --namespace <namespace> -- env
+    kubectl exec -it <pod> --namespace $NAMESPACE -- env
     ```
 
     The output should look like this:
