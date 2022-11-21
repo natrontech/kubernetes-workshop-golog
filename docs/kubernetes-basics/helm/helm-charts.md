@@ -123,7 +123,7 @@ Thus, we need to change this value inside our `mychart/values.yaml` file. This i
 
 !!! note
 
-    Make sure to replace the `$URL` accordingly.
+    Make sure to replace the `<url>` and `<namespace>` accordingly.
 
 ```yaml
 [...]
@@ -132,21 +132,30 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/add-base-url: "true"
   hosts:
-    - host: $URL
+    - host: <url>
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: $URL-mychart-tls
+    - secretName: <namespace>-tls
       hosts:
-        - $URL
+        - <url>
 [...]
 ```
 
 !!! note
 
-    Make sure to set the proper value as hostname. `$URL` will be provided by the trainer.
+    Make sure to set the proper value as hostname. `<namespace>` and `<url>` will be provided by the trainer.
+
+Before we can upgrade, make sure to delete the old ingress resource:
+
+```bash
+kubectl get ingress --namespace $NAMESPACE
+kubectl delete ingress <ingress-name> --namespace $NAMESPACE
+```
 
 Apply the change by upgrading our release:
 

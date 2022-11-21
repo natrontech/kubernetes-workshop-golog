@@ -11,7 +11,7 @@ spec:
   tls:
   - hosts:
     - test.k8s.golog.ch
-    secretName: test-postgresql-webserver-tls
+    secretName: test-tls
   rules:
   - host: test.k8s.golog.ch
     http:

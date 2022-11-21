@@ -148,7 +148,7 @@ Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to ex
       tls:
       - hosts:
         - $URL
-        secretName: ${URL}-nfs-webserver-tls
+        secretName: ${NAMESPACE}-tls
       rules:
       - host: $URL
         http:

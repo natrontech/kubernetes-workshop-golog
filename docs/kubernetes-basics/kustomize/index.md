@@ -1,4 +1,14 @@
 # Kustomize
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 [Kustomize](https://kustomize.io/) is a tool to manage YAML configurations for Kubernetes objects in a declarative and reusable manner. In this lab, we will use Kustomize to deploy the same app for two different environments.
 
 ## Installation
@@ -239,11 +249,11 @@ Prepare the files as described above in a local directory of your choice.
 We are now ready to deploy both apps for the two different environments. For simplicity, we will use the same Namespace.
 
 ```bash
-kubectl apply -k overlays/staging --namespace <namespace>
+kubectl apply -k overlays/staging --namespace $NAMESPACE
 ```
 
 ```bash
-kubectl apply -k overlays/production --namespace <namespace>
+kubectl apply -k overlays/production --namespace $NAMESPACE
 ```
 
 As you can see, we now have two deployments and services deployed. Both of them use the same base configuration. However, they have a specific configuration on their own as well.
@@ -251,11 +261,11 @@ As you can see, we now have two deployments and services deployed. Both of them 
 Let’s verify this. Our app writes a corresponding log entry that we can use for analysis:
 
 ```bash
-kubectl get pods --namespace <namespace>
+kubectl get pods --namespace $NAMESPACE
 ```
 
 ```bash
-kubectl logs <pod-name> --namespace <namespace>
+kubectl logs <pod-name> --namespace $NAMESPACE
 ```
 
 ## Further Reading

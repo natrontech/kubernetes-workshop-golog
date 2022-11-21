@@ -131,7 +131,7 @@ spec:
   tls:
   - hosts:
     - $URL
-    secretName: ${URL}-test-postgresql-webserver-tls
+    secretName: ${NAMESPACE}-tls
   rules:
   - host: $URL
     http:
