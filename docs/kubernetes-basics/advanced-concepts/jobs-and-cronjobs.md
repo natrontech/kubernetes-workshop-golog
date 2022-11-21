@@ -1,4 +1,14 @@
 # Jobs and CronJobs
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 Jobs are different from normal Deployments: Jobs execute a time-constrained operation and report the result as soon as they are finished; think of a batch job. To achieve this, a Job creates a Pod and runs a defined command. A Job isn’t limited to creating a single Pod, it can also create multiple Pods. When a Job is deleted, the Pods started (and stopped) by the Job are also deleted.
 
 For example, a Job is used to ensure that a Pod is run until its completion. If a Pod fails, for example because of a Node error, the Job starts a new one. A Job can also be used to start multiple Pods in parallel.
@@ -76,15 +86,15 @@ stringData:
 Execute the following commands to create the Job and the secret:
 
 ```bash
-kubectl apply -f secret.yaml --namespace <namespace>
-kubectl apply -f job.yaml --namespace <namespace>
+kubectl apply -f secret.yaml --namespace $NAMESPACE
+kubectl apply -f job.yaml --namespace $NAMESPACE
 ```
 
 ## :octicons-tasklist-16: **Task 2**: Check the Job status
 Check the status of the Job:
 
 ```bash
-kubectl get jobs --namespace <namespace>
+kubectl get jobs --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -99,7 +109,7 @@ The Job is completed after 19 seconds. The Job created a Pod and executed the co
 Check the Job pod logs:
 
 ```bash
-kubectl logs -f jobs/pg-dump --namespace <namespace>
+kubectl logs -f jobs/pg-dump --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -117,7 +127,7 @@ The Job created a database dump and stored it in a file called `backup-2022-11-2
 To show all Pods belonging to a Job in a human-readable format, the following command can be used:
 
 ```bash
-kubectl get pods --selector=job-name=pg-dump --output=go-template='{{range .items}}{{.metadata.name}}{{end}}' --namespace <namespace>
+kubectl get pods --selector=job-name=pg-dump --output=go-template='{{range .items}}{{.metadata.name}}{{end}}' --namespace $NAMESPACE
 ```
 
 ## :octicons-tasklist-16: **Task 3**: Create a CronJob
