@@ -116,7 +116,8 @@ spec:
 
 Create a file called `db-ingress.yaml` with the following content:
 
-```yaml
+```bash
+kubectl create --dry-run=client --namespace $NAMESPACE -o yaml -f - <<EOF >> db-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -129,10 +130,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - test.k8s.golog.ch
-    secretName: test-postgresql-webserver-tls
+    - $URL
+    secretName: ${URL}-test-postgresql-webserver-tls
   rules:
-  - host: test.k8s.golog.ch
+  - host: $URL
     http:
       paths:
       - path: /
@@ -142,6 +143,7 @@ spec:
             name: test-postgresql-webserver
             port:
               number: 8080
+EOF
 ```
 
 Finally, create the Deployment and Service:
@@ -161,7 +163,7 @@ kubectl delete ingress <ingress name> --namespace $NAMESPACE
 Create the Ingress:
 
 ```bash
-kubectl apply -f db-ingress.yaml
+kubectl apply -f db-ingress.yaml --namespace $NAMESPACE
 ```
 
 Check if the pod is running and also check the logs:
