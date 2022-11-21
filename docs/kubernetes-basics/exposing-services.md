@@ -109,7 +109,8 @@ With the following command you get details from the Pod:
     First, get all Pod names from your namespace with (`kubectl get pods --namespace $NAMESPACE`) and then replace <pod> in the following command. If you have installed and configured the bash completion, you can also press the TAB key for autocompletion of the Pod’s name.
 
 ```bash
-kubectl get pod <pod> -o yaml --namespace $NAMESPACE
+export POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "app=test-webserver" -o jsonpath="{.items[0].metadata.name}")
+kubectl get pod $POD_NAME -o yaml --namespace $NAMESPACE
 ```
 
 Let’s have a look at the label section of the Pod and verify that the Service selector matches the Pod’s labels:
@@ -154,7 +155,7 @@ With the NodePort Service ready, we can now create the Ingress resource.
 In order to create the Ingress resource, we first need to create the file `ingress.yaml` and change the host entry to match your environment:
 
 ```bash
-kubectl create --dry-run=client -o yaml -f - <<EOF
+kubectl create --dry-run=client -o yaml -f - <<EOF >> ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

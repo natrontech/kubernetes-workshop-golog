@@ -57,7 +57,7 @@ spec:
       - name: not-frontend-container
         image: docker.io/byrnedo/alpine-curl:0.1.8
         imagePullPolicy: IfNotPresent
-        command: [ "/bin/ash", "-c", "sleep 1000000000" ]
+        command: [ "/bin/bash", "-c", "sleep 1000000000" ]
 ---
 apiVersion: apps/v1
 kind: Deployment
