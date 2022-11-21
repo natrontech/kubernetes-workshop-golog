@@ -2,6 +2,16 @@
 
 In this module, you'll learn how to expose an application to the outside world.
 
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    export URL=${NAMESPACE}.k8s.golog.ch
+    ```
+
 ## :octicons-tasklist-16: **Task 1**: Create a NodePort Service with an Ingress
 The command `kubectl apply -f deployment.yaml `from the last tutorial creates a Deployment but no Service. A Kubernetes Service is an abstract way to expose an application running on a set of Pods as a network service. For some parts of your application (for example, frontends) you may want to expose a Service to an external IP address which is outside your cluster.
 
@@ -19,13 +29,13 @@ You can also use Ingress to expose your Service. Ingress is not a Service type, 
 In order to create an Ingress, we first need to create a Service of type [ClusterIP](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) . We’re going to do this with the command `kubectl expose`:
 
 ```bash
-kubectl expose deployment/test-webserver --name=test-webserver --port=8080 --target-port=8080 --type=NodePort --namespace <namespace>
+kubectl expose deployment/test-webserver --name=test-webserver --port=8080 --target-port=8080 --type=NodePort --namespace $NAMESPACE
 ```
 
 Let’s have a more detailed look at our Service:
 
 ```bash
-kubectl get service test-webserver --namespace <namespace>
+kubectl get service test-webserver --namespace $NAMESPACE
 ```
 
 The output should look like this:
@@ -42,7 +52,7 @@ test-webserver      NodePort   10.97.53.32   <none>        8080:32329/TCP   4s
 By executing the following command:
 
 ```bash
-kubectl get service test-webserver -o yaml --namespace <namespace>
+kubectl get service test-webserver -o yaml --namespace $NAMESPACE
 ```
 
 You get additional information:
@@ -81,7 +91,7 @@ status:
 The Service’s `selector` defines which Pods are being used as Endpoints. This happens based on labels. Look at the configuration of Service and Pod in order to find out what maps to what:
 
 ```bash
-kubectl get service test-webserver -o yaml --namespace <namespace>
+kubectl get service test-webserver -o yaml --namespace $NAMESPACE
 ```
 
 ```yaml
@@ -95,10 +105,10 @@ With the following command you get details from the Pod:
 
 !!! note
 
-    First, get all Pod names from your namespace with (`kubectl get pods --namespace <namespace>`) and then replace <pod> in the following command. If you have installed and configured the bash completion, you can also press the TAB key for autocompletion of the Pod’s name.
+    First, get all Pod names from your namespace with (`kubectl get pods --namespace $NAMESPACE`) and then replace <pod> in the following command. If you have installed and configured the bash completion, you can also press the TAB key for autocompletion of the Pod’s name.
 
 ```bash
-kubectl get pod <pod> -o yaml --namespace <namespace>
+kubectl get pod <pod> -o yaml --namespace $NAMESPACE
 ```
 
 Let’s have a look at the label section of the Pod and verify that the Service selector matches the Pod’s labels:
@@ -113,7 +123,7 @@ Let’s have a look at the label section of the Pod and verify that the Service 
 This link between Service and Pod can also be displayed in an easier fashion with the kubectl describe command:
 
 ```bash
-kubectl describe service test-webserver --namespace <namespace>
+kubectl describe service test-webserver --namespace $NAMESPACE
 ```
 
 ```
@@ -142,7 +152,8 @@ With the NodePort Service ready, we can now create the Ingress resource.
 
 In order to create the Ingress resource, we first need to create the file `ingress.yaml` and change the host entry to match your environment:
 
-```yaml
+```bash
+kubectl create --dry-run=client -o yaml -f - <<EOF
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -155,10 +166,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - test.k8s.golog.ch
-    secretName: test-webserver-tls
+    - $URL
+    secretName: ${URL}-test-webserver-tls
   rules:
-  - host: test.k8s.golog.ch
+  - host: $URL
     http:
       paths:
       - path: /
@@ -168,6 +179,7 @@ spec:
             name: test-webserver
             port:
               number: 8080
+EOF
 ```
 
 As you see in the resource definition at `spec.rules[0].http.paths[0].backend.service.name` we use the previously created `test-webserver` NodePort Service.
@@ -175,26 +187,26 @@ As you see in the resource definition at `spec.rules[0].http.paths[0].backend.se
 Let’s create the Ingress resource with:
 
 ```bash
-kubectl apply -f ingress.yaml --namespace <namespace>
+kubectl apply -f ingress.yaml --namespace $NAMESPACE
 ```
 
-Afterwards, we are able to access our freshly created Ingress at `https://test.k8s.golog.ch`
+Afterwards, we are able to access our freshly created Ingress at `https://<namespace>.k8s.golog.ch`
 
 ## :octicons-tasklist-16: **Task 2**: For fast learners
-Have a closer look at the resources created in your namespace <namespace> with the following commands and try to understand them:
+Have a closer look at the resources created in your namespace $NAMESPACE with the following commands and try to understand them:
 
 ```bash
-kubectl describe namespace <namespace>
+kubectl describe namespace $NAMESPACE
 ```
 
 ```bash
-kubectl get all --namespace <namespace>
+kubectl get all --namespace $NAMESPACE
 ```
 
 ```bash
-kubectl describe <resource> <name> --namespace <namespace>
+kubectl describe <resource> <name> --namespace $NAMESPACE
 ```
 
 ```bash
-kubectl get <resource> <name> -o yaml --namespace <namespace>
+kubectl get <resource> <name> -o yaml --namespace $NAMESPACE
 ```
