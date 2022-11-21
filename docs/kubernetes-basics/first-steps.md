@@ -8,10 +8,16 @@ In this tutorial, we will interact with the Kubernetes cluster for the first tim
 ## Login
 To login to the stepping stone cluster head over to the [Stepping Stone Wiki](https://wiki.golog.ch/wiki/Category:Customer:_Golog_AG).
 There you will find the login information for the cluster.
+Also you can copy the `kubeconfig` file from the wiki to your local machine. (e.g. `~/.kube/config`)
 
 !!! note
 
+    You can rename the context in the `kubeconfig` file to `stepping-stone` to make it easier to use. There are also some cli tools which improve the observability of the cluster context. (e.g. `oh-my-zsh`)
+
+!!! warning
+
     For this tutorial you can also use a local [minikube](https://minikube.sigs.k8s.io/docs/start/) cluster.
+    But some parts of the tutorial will not work as expected. (e.g. the ingress, storage, etc.)
 
 ## Namespaces
 As a first step on the cluster, we are going to create a new Namespace.
