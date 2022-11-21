@@ -98,7 +98,6 @@ nav:
     - Security: 
       - kubernetes-basics/security/index.md
       - RBAC: kubernetes-basics/security/rbac.md
-      - Pod Security Policies: kubernetes-basics/security/pod-security-policies.md
       - Network Policies: kubernetes-basics/security/network-policies.md
       - Security Contexts: kubernetes-basics/security/security-contexts.md
     - Deployment Strategies: 
