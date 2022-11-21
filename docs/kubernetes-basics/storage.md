@@ -38,7 +38,7 @@ spec:
 
 !!! abstract "Details"
 
-    For further informations read the [NFS based persistent storage](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes) documentation.
+    For further information read the [NFS based persistent storage](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes) documentation.
 
 Then we need to create a **PersistentVolumeClaim**.
 A **persistent volume claim (PVC)** specifies the desired access mode and storage capacity. Currently, based on only these two attributes, a PVC is bound to a single PV. Once a PV is bound to a PVC, that PV is essentially tied to the PVC’s project and cannot be bound to by another PVC. There is a one-to-one mapping of PVs and PVCs. However, multiple pods in the same project can use the same PVC.

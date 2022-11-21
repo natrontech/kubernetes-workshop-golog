@@ -5,7 +5,7 @@ For example, a Job is used to ensure that a Pod is run until its completion. If 
 
 More detailed information can be retrieved from the [Kubernetes documentation](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/).
 
-## :octicons-tasklist-16: **Task 1**: Create a Job for a databse dump
+## :octicons-tasklist-16: **Task 1**: Create a Job for a database dump
 We want to create a Job that creates a postgresql database dump and stores it in a file. The Job should run once and then terminate.
 
 Create a file called `job.yaml` with the following content:
