@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-demo
+spec:
+  initContainers:
+    - name: init
+      image: busybox
+      command:
+        - 'sh'
+        - '-c'
+        - 'echo "init" >> /work-dir/test.log'
+      volumeMounts:
+        - name: workdir
+          mountPath: /work-dir
+  containers:
+  - name: logwriter
+    image: busybox
+    command:
+      - 'sh'
+      - '-c'
+      - 'while true; do printf "%s %s\n" "$(date)" >> /work-dir/test.log; sleep 1; done'
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        cpu: 20m
+        memory: 32Mi
+    volumeMounts:
+      - name: workdir
+        mountPath: /work-dir
+  - name: logreader
+    image: busybox
+    command:
+    - 'sh'
+    - '-c'
+    - 'while true; do cat /work-dir/test.log; sleep 1; done'
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+      limits:
+        cpu: 20m
+        memory: 32Mi
+    volumeMounts:
+    - name: workdir
+      mountPath: /work-dir
+  volumes:
+  - name: workdir
+    emptyDir: {}
