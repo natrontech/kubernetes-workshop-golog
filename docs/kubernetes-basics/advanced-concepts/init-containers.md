@@ -145,6 +145,10 @@ spec:
             name: db-secret
 ```
 
+!!! note
+
+    Make sure to replace `<postgresql host>` with the host of your PostgreSQL database.
+
 Apply the file:
 
 ```bash
@@ -169,5 +173,6 @@ The Deployment is in the `Init:0/1` state, which means that the init container i
 Check the logs of the init container:
 
 ```bash
-kubectl logs <init pod> -c pg-isready --namespace $NAMESPACE
+export POD_NAME=$(kubectl get pods --namespace $NAMESPACE -l "app=init-deployment" -o jsonpath="{.items[0].metadata.name}")
+kubectl logs $POD_NAME -c pg-isready --namespace $NAMESPACE
 ```
