@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kustomize-app
+spec:
+  selector:
+    matchLabels:
+      app: kustomize-app
+  template:
+    metadata:
+      labels:
+        app: kustomize-app
+    spec:
+      containers:
+        - name: kustomize-app
+          image: ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest
+          env:
+            - name: APPLICATION_NAME
+              value: app-base
+          command:
+            - sh
+            - -c
+            - |-
+              set -e
+              /bin/echo "My name is $APPLICATION_NAME"
+              /usr/local/bin/go              
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
