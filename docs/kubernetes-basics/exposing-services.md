@@ -155,7 +155,7 @@ With the NodePort Service ready, we can now create the Ingress resource.
 In order to create the Ingress resource, we first need to create the file `ingress.yaml` and change the host entry to match your environment:
 
 ```bash
-kubectl create --dry-run=client -o yaml -f - <<EOF >> ingress.yaml
+kubectl create --dry-run=client --namespace $NAMESPACE -o yaml -f - <<EOF >> ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -190,6 +190,12 @@ Let’s create the Ingress resource with:
 
 ```bash
 kubectl apply -f ingress.yaml --namespace $NAMESPACE
+```
+
+Get the hostname of the Ingress resource:
+
+```bash
+kubectl get ingress test-webserver --namespace $NAMESPACE
 ```
 
 Afterwards, we are able to access our freshly created Ingress at `https://<namespace>.k8s.golog.ch`
