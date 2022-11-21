@@ -114,6 +114,8 @@ Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to ex
 
 ??? example "solution"
 
+    `nfs-service.yaml`:
+
     ```yaml
     # nfs-service.yaml
     apiVersion: v1
@@ -129,8 +131,10 @@ Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to ex
         app: nfs-webserver
     ```
 
-    ```yaml
-    # nfs-ingress.yaml
+    `nfs-ingress.yaml`:
+
+    ```bash
+    kubectl create --dry-run=client --namespace $NAMESPACE -o yaml -f - <<EOF >> nfs-ingress.yaml
     apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
@@ -143,10 +147,10 @@ Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to ex
     spec:
       tls:
       - hosts:
-        - test.k8s.golog.ch
-        secretName: nfs-webserver-tls
+        - $URL
+        secretName: ${URL}-nfs-webserver-tls
       rules:
-      - host: test.k8s.golog.ch
+      - host: $URL
         http:
           paths:
           - path: /
@@ -156,6 +160,7 @@ Also create the responsible `nfs-service.yaml` and `nfs-ingress.yaml` file to ex
                 name: nfs-webserver
                 port:
                   number: 80
+    EOF
     ```
 
 !!! note "Ingress"
