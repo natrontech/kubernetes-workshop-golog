@@ -33,7 +33,7 @@ The `kubectl help` output can help you figure out the right command.
 
 !!! note
     
-    Please choose an identifying name for your Namespace, e.g. your initials or name as a prefix.
+    Please choose an identifying name for your Namespace, e.g. your `initials` or name as a `prefix`.
 
     We are going to use `<namespace>` as a placeholder for your created Namespace.
 
@@ -41,6 +41,8 @@ The `kubectl help` output can help you figure out the right command.
 
     ```bash
     kubectl create namespace <namespace>
+    # export it as an environment variable for later use (will be mentioned in the tutorial)
+    export NAMESPACE=<namespace>
     ```
 
 !!! note

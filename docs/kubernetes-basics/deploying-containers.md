@@ -1,6 +1,15 @@
 # Deploying Containers
 In this tutorial, we are going to deploy our first container image and look at the concepts of Pods, Services, and Deployments.
 
+!!! success "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    ```
+
 ## :octicons-tasklist-16: **Task 1**: Start and stop a single Pod
 After we’ve familiarized ourselves with the platform, we are going to have a look at deploying a pre-built container image or any other public container registry.
 
