@@ -229,3 +229,30 @@ You can refer to the [official documentation](https://kubernetes.io/docs/tasks/c
                 name: javaconfiguration
               name: config-volume
     ```
+
+    Make sure you delete the old deployment first:
+
+    ```bash
+    kubectl delete deployment spring-boot-example --namespace <namespace>
+    ```
+
+    Then, create the new deployment:
+
+    ```bash
+    kubectl create -f java-deployment.yaml --namespace <namespace>
+    ```
+
+    Check the environment variables of the container:
+
+    ```bash
+    kubectl exec -it <pod> --namespace <namespace> -- env
+    ```
+
+    The output should look like this:
+
+    ```
+    ...
+    JAVA_OPTS=-Xmx512m
+    JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+    ...
+    ```
