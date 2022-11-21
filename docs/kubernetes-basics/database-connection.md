@@ -1,4 +1,16 @@
 # Database Connection
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    export URL=${NAMESPACE}.k8s.golog.ch
+    echo $URL
+    ```
+
 You've now created a Deployment, exposed it as a Service, and scaled it up. But how do you know if it's working? How do you know if your application is actually connecting to the database? In this module, you'll learn how to connect to your application and run some simple commands to verify that it's working.
 
 For this tutorial you'll have to take a look at the [stepping stone postgresql](https://wiki.golog.ch/wiki/gog-pro-010#Operations_-_PostgreSQL) documentation.
@@ -129,15 +141,15 @@ spec:
 Finally, create the Deployment and Service:
 
 ```bash
-kubectl apply -f db-secret.yaml --namespace <namespace>
-kubectl apply -f db-deployment.yaml --namespace <namespace>
-kubectl apply -f db-service.yaml --namespace <namespace>
+kubectl apply -f db-secret.yaml --namespace $NAMESPACE
+kubectl apply -f db-deployment.yaml --namespace $NAMESPACE
+kubectl apply -f db-service.yaml --namespace $NAMESPACE
 ```
 
 Before you create the Ingress, you need to delete the old Ingress:
 
 ```bash
-kubectl delete ingress <ingress name> --namespace <namespace>
+kubectl delete ingress <ingress name> --namespace $NAMESPACE
 ```
 
 Create the Ingress:
@@ -149,6 +161,6 @@ kubectl apply -f db-ingress.yaml
 Check if the pod is running and also check the logs:
 
 ```bash
-kubectl get pods --namespace <namespace>
-kubectl logs <pod name> --namespace <namespace>
+kubectl get pods --namespace $NAMESPACE
+kubectl logs <pod name> --namespace $NAMESPACE
 ```
