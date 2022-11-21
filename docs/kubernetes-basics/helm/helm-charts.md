@@ -1,4 +1,16 @@
 # Helm Charts
+
+!!! reminder "Environment Variables"
+
+    We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
+    ```bash
+    # check if the environment variables are set if not set them
+    export NAMESPACE=<namespace>
+    echo $NAMESPACE
+    export URL=${NAMESPACE}.k8s.golog.ch
+    echo $URL
+    ```
+
 In this tutorial we are going to create our very first Helm chart and deploy it.
 
 ## :octicons-tasklist-16: **Task 1**: Create a Chart
@@ -14,16 +26,16 @@ You will now find a `mychart` directory with the newly created chart. It already
 Before actually deploying our generated chart, we can check the (to be) generated Kubernetes resources with the following command:
 
 ```bash
-helm install --dry-run --debug --namespace <namespace> myfirstrelease ./mychart
+helm install --dry-run --debug --namespace $NAMESPACE myfirstrelease ./mychart
 ```
 
 Finally, the following command creates a new release and deploys the application:
 
 ```bash
-helm install --namespace <namespace> myfirstrelease ./mychart
+helm install --namespace $NAMESPACE myfirstrelease ./mychart
 ```
 
-With `kubectl get pods --namespace <namespace>` you should see a new Pod:
+With `kubectl get pods --namespace $NAMESPACE` you should see a new Pod:
 
 ```
 NAME                                     READY   STATUS    RESTARTS   AGE
@@ -33,7 +45,7 @@ myfirstrelease-mychart-4d5956b75-nd8jd   1/1     Running   0          2m21s
 You can list the newly created Helm release with the following command:
 
 ```bash
-helm list --namespace <namespace>
+helm list --namespace $NAMESPACE
 ```
 
 ## :octicons-tasklist-16: **Task 3**: Upgrade the Chart
@@ -111,7 +123,7 @@ Thus, we need to change this value inside our `mychart/values.yaml` file. This i
 
 !!! note
 
-    Make sure to replace the `<namespace>` and `<appdomain>` accordingly.
+    Make sure to replace the `$URL` accordingly.
 
 ```yaml
 [...]
@@ -121,25 +133,25 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: mychart-<namespace>.<appdomain>
+    - host: $URL
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: mychart-<namespace>-<appdomain>
+    - secretName: $URL-mychart-tls
       hosts:
-        - mychart-<namespace>.<appdomain>
+        - $URL
 [...]
 ```
 
 !!! note
 
-    Make sure to set the proper value as hostname. `<appdomain>` will be provided by the trainer.
+    Make sure to set the proper value as hostname. `$URL` will be provided by the trainer.
 
 Apply the change by upgrading our release:
 
 ```bash
-helm upgrade --namespace <namespace> myfirstrelease ./mychart
+helm upgrade --namespace $NAMESPACE myfirstrelease ./mychart
 ```
 
 Check wether the ingress was successfully deployed by accessing the URL.
@@ -151,7 +163,7 @@ An alternative way to set or overwrite values for charts we want to deploy is th
 Update the replica count of your nginx Deployment to 2 using `--set name=value`
 
 ```bash
-helm upgrade --namespace <namespace> --set replicaCount=2 myfirstrelease ./mychart
+helm upgrade --namespace $NAMESPACE --set replicaCount=2 myfirstrelease ./mychart
 ```
 
 ## :octicons-tasklist-16: **Task 5**: `values.yaml`
@@ -161,10 +173,10 @@ Have a look at the `values.yaml` file in your chart and study all the possible c
 To remove an application, simply remove the Helm release with the following command:
 
 ```bash
-helm uninstall --namespace <namespace> myfirstrelease
+helm uninstall --namespace $NAMESPACE myfirstrelease
 ```
 
-Do this with our deployed release. With `kubectl get pods --namespace <namespace>` you should no longer see your application Pod.
+Do this with our deployed release. With `kubectl get pods --namespace $NAMESPACE` you should no longer see your application Pod.
 
 
 ## Further Reading
