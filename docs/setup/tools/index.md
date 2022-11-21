@@ -8,8 +8,8 @@ This section lists some of the most common tools.
 ## kubectx
 [kubectx](https://github.com/ahmetb/kubectx) is a tool that can help you switch between clusters and namespaces.
 
-## lens
-[Lens](https://k8slens.dev/) is a tool that can help you manage your Kubernetes clusters with a graphical user interface.
+## OpenLens
+[OpenLens](https://github.com/MuhammedKalkan/OpenLens) is a tool that can help you manage your Kubernetes clusters with a graphical user interface.
 
 ## minikube
 To install minikube you need docker or podman installed on your machine.
