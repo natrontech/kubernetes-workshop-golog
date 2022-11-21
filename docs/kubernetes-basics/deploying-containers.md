@@ -6,7 +6,7 @@ In this tutorial, we are going to deploy our first container image and look at t
     We are going to use some environment variables in this tutorial. Please make sure you have set them correctly.
     ```bash
     # check if the environment variables are set if not set them
-    export NAMESPACE=<namespace>
+    export NAMESPACE=$NAMESPACE
     echo $NAMESPACE
     ```
 
@@ -39,7 +39,7 @@ spec:
 Now we can apply this with:
 
 ```bash
-kubectl apply -f pod.yaml --namespace <namespace>
+kubectl apply -f pod.yaml --namespace $NAMESPACE
 ```
 
 The output should be:
@@ -47,10 +47,10 @@ The output should be:
 pod/test-webserver created
 ```
 
-Use `kubectl get pods --namespace <namespace>` in order to show the running Pod:
+Use `kubectl get pods --namespace $NAMESPACE` in order to show the running Pod:
 
 ```bash
-kubectl get pods --namespace <namespace>
+kubectl get pods --namespace $NAMESPACE
 ```
 
 Which gives you an output similar to this:
@@ -63,7 +63,7 @@ test-webserver   1/1     Running   0          2m
 Now we can delete the Pod with:
 
 ```bash
-kubectl delete pod test-webserver --namespace <namespace>
+kubectl delete pod test-webserver --namespace $NAMESPACE
 ```
 
 ## :octicons-tasklist-16: **Task 2**: Create a Deployment
@@ -103,7 +103,7 @@ spec:
 And with this we create our Deployment inside our already created namespace:
 
 ```bash
-kubectl apply -f deployment.yaml --namespace <namespace>
+kubectl apply -f deployment.yaml --namespace $NAMESPACE
 ```
 
 The output should be:
@@ -121,7 +121,7 @@ Use the command `kubectl get` with the `-w` parameter in order to get the reques
     The `kubectl get -w `command will never end unless you terminate it with `CTRL-c`.
 
 ```bash
-kubectl get pods -w --namespace <namespace>
+kubectl get pods -w --namespace $NAMESPACE
 ```
 
 !!! note
@@ -129,7 +129,7 @@ kubectl get pods -w --namespace <namespace>
     Instead of using the `-w` parameter you can also use the `watch` command which should be available on most Linux distributions:
 
     ```bash
-    watch kubectl get pods --namespace <namespace>
+    watch kubectl get pods --namespace $NAMESPACE
     ```
 
 This process can last for some time depending on your internet connection and if the image is already available locally.
@@ -146,7 +146,7 @@ The other variant is to use helper commands. These are more straightforward: You
 As an example, let’s look at creating above deployment, this time using a helper command instead. If you already created the Deployment using above YAML definition, you don’t have to execute this command:
 
 ```bash
-kubectl create deployment test-webserver --image=ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest --namespace <namespace>
+kubectl create deployment test-webserver --image=ghcr.io/natrongmbh/kubernetes-workshop-test-webserver:latest --namespace $NAMESPACE
 ```
 
 It’s important to know that these helper commands exist. However, in a world where GitOps concepts have an ever-increasing presence, the idea is not to constantly create these resources with helper commands. Instead, we save the resources’ YAML definitions in a Git repository and leave the creation and management of those resources to a tool.
@@ -155,7 +155,7 @@ It’s important to know that these helper commands exist. However, in a world w
 Display the created Deployment using the following command:
 
 ```bash
-kubectl get deployments --namespace <namespace>
+kubectl get deployments --namespace $NAMESPACE
 ```
 
 A [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) defines the following facts:
@@ -170,13 +170,13 @@ A [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deploym
 By using the `-o` (or `--output`) parameter we get a lot more information about the deployment itself. You can choose between YAML and JSON formatting by indicating `-o yaml` or `-o json`. In this training we are going to use YAML, but please feel free to replace `yaml` with `json` if you prefer.
 
 ```bash
-kubectl get deployments test-webserver -o yaml --namespace <namespace>
+kubectl get deployments test-webserver -o yaml --namespace $NAMESPACE
 ```
 
 After the image has been pulled, Kubernetes deploys a Pod according to the Deployment:
 
 ```bash
-kubectl get pods --namespace <namespace>
+kubectl get pods --namespace $NAMESPACE
 ```
 
 which gives you an output similar to this:
