@@ -13,6 +13,12 @@ You can also get certified by passing the following exams:
 - [CKAD](https://www.cncf.io/certification/ckad/)
 - [CKS](https://www.cncf.io/certification/cks/)
 
+**Dashboard**
+
+You can also use the Kubernetes Dashboard to manage your cluster.
+
+- [Dashboard](https://dashboard.k8s.golog.ch)
+
 ## Core idea 
 With open-source software Kubernetes, you get a platform that can deploy your application in containers and run it simultaneously.  
 For this reason, Kubernetes is also known as a container platform, or to use the term container as a service (CaaS).  
