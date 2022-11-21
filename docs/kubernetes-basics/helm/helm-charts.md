@@ -163,7 +163,7 @@ Apply the change by upgrading our release:
 helm upgrade --namespace $NAMESPACE myfirstrelease ./mychart
 ```
 
-Check wether the ingress was successfully deployed by accessing the URL.
+Check whether the ingress was successfully deployed by accessing the URL.
 
 ## :octicons-tasklist-16: **Task 4**: Overwrite value using commandline param
 

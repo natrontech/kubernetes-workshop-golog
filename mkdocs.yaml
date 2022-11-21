@@ -107,6 +107,12 @@ nav:
       - Helm Charts: kubernetes-basics/helm/helm-charts.md
     - Kustomize: 
       - kubernetes-basics/kustomize/index.md
+  - Monitoring:
+    - monitoring/index.md
+    - Kube Prometheus Stack: monitoring/kube-prometheus-stack.md
+  - GitOps:
+    - gitops/index.md
+    - Gitlab: gitops/gitlab.md
   - Materials:
     - materials/index.md
     - Credits: materials/credits.md
