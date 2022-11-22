@@ -108,9 +108,7 @@ nav:
     - Kustomize: 
       - kubernetes-basics/kustomize/index.md
   - Monitoring: monitoring/index.md
-  - GitOps:
-    - gitops/index.md
-    - Gitlab: gitops/gitlab.md
+  - GitOps: gitops/index.md
   - Materials:
     - materials/index.md
     - Credits: materials/credits.md
