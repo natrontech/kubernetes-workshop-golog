@@ -131,7 +131,7 @@ spec:
           - 'echo'
           - 'Database is ready'
       containers:
-      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-postgresql-webserver:latest
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-test-postgresql-webserver:latest
         name: init-deployment
         resources:
           requests:

@@ -25,7 +25,7 @@ metadata:
   name: test-webserver
 spec:
   containers:
-  - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-webserver:latest
+  - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-test-webserver:latest
     imagePullPolicy: Always
     name: test-webserver
     resources:
@@ -90,7 +90,7 @@ spec:
         app: test-webserver
     spec:
       containers:
-      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-webserver:latest
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-test-webserver:latest
         name: test-webserver
         resources:
           requests:
@@ -147,7 +147,7 @@ The other variant is to use helper commands. These are more straightforward: You
 As an example, let’s look at creating above deployment, this time using a helper command instead. If you already created the Deployment using above YAML definition, you don’t have to execute this command:
 
 ```bash
-kubectl create deployment test-webserver --image=ghcr.io/natrongmbh/kubernetes-workshop-golog-webserver:latest --namespace $NAMESPACE
+kubectl create deployment test-webserver --image=ghcr.io/natrongmbh/kubernetes-workshop-golog-test-webserver:latest --namespace $NAMESPACE
 ```
 
 It’s important to know that these helper commands exist. However, in a world where GitOps concepts have an ever-increasing presence, the idea is not to constantly create these resources with helper commands. Instead, we save the resources’ YAML definitions in a Git repository and leave the creation and management of those resources to a tool.
