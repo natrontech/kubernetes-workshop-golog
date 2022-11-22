@@ -22,5 +22,8 @@ Some of the materials used in the course are available here.
     A reference for the Kubernetes API.  
     [:octicons-arrow-right-24: Show me](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/)
 
+-   :octicons-mark-github-16:{ .lg .middle } __Troubleshooting Kubernetes Deployments__  
+    A guide to troubleshoot Kubernetes deployments.  
+    [:octicons-arrow-right-24: Show me](https://gandrille.github.io/tech-notes/Docker_and_Kubernetes/Kubernetes_Core/Security_and_monitoring/Monitoring,_Logging,_Troubleshooting/troubleshooting-kubernetes.pdf)
 
 - [Official Kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
