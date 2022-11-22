@@ -17,3 +17,6 @@ To install minikube you need docker or podman installed on your machine.
 
 ## GitBash
 [GitBash](https://gitforwindows.org/) is a tool that can help you run bash commands on Windows.
+
+## Kubeshark
+[Kubeshark](https://github.com/kubeshark/kubeshark) provides deep visibility and monitoring of all API traffic and payloads going in, out and across containers and pods inside a Kubernetes cluster.
