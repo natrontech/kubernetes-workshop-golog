@@ -15,7 +15,7 @@ spec:
         app: test-webserver
     spec:
       containers:
-      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-webserver:latest
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-test-webserver:latest
         name: test-webserver
         resources:
           requests:

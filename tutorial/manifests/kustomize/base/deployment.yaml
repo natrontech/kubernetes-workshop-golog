@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: kustomize-app
-          image: ghcr.io/natrongmbh/kubernetes-workshop-golog-webserver:latest
+          image: ghcr.io/natrongmbh/kubernetes-workshop-golog-test-webserver:latest
           env:
             - name: APPLICATION_NAME
               value: app-base

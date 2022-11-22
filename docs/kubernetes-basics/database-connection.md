@@ -83,7 +83,7 @@ spec:
         app: test-postgresql-webserver
     spec:
       containers:
-      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-postgresql-webserver:latest
+      - image: ghcr.io/natrongmbh/kubernetes-workshop-golog-test-postgresql-webserver:latest
         name: test-postgresql-webserver
         resources:
           requests:
