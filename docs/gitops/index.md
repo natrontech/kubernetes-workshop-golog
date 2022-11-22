@@ -11,7 +11,10 @@ The main benefits of GitOps are:
 - **Easy auditing**: All changes are in source control.
 - **Easy rollbacks**: Rollbacks are just a `git revert`.
 - **Easy onboarding**: Onboarding new team members is as simple as giving them access to the repository.
-- **Easy CI/CD**: CI/CD pipelines are just a `git push`.
+- **Easy CI/CD**: CI/CD pipelines can be set up to automatically deploy changes to the cluster.
+- **Easy to scale**: GitOps scales well with the number of applications and teams.
+- **Easy to understand**: GitOps is a simple workflow that is easy to understand and explain.
+- **Easy to automate**: GitOps can be fully automated with tools like [Flux](https://fluxcd.io/).
 
 ## Flux
 
