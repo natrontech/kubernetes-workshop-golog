@@ -21,31 +21,43 @@ The *PersistentVolumeClaim* only represents a request but not the storage itself
 On the **stepping stone** cluster we have a `NFS` service that provides storage to the cluster. 
 You can find the details of the service in the [stepping stone documentation](https://wiki.golog.ch/wiki/Category:Customer:_Golog_AG).
 
+## NFS Storage Class
+For the next steps you need to deploy a Storage Class Provider, which handles the `PVC` with the NFS Server.
+
+A solid service is the following Project:
+
+- [NFS Subdir External Provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner)
+
+!!! note
+
+    The following steps are only necessary if it was not already deployed. Also make sure you know how to use [helm](./helm/index.md)
+
+For a simple helm deployment you can execute the following commands:
+
+```bash
+helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+helm repo update
+```
+
+Create a dedicated namespace:
+
+```bash
+kubectl create namespace nfs-provisioner
+```
+
+Create the Helm deployment:
+
+```bash
+helm install nfs-subdir-external-provisioner --namespace nfs-provisioner \
+  nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+  --set nfs.server=192.168.16.17 \
+  --set nfs.path=/var/data/share \
+  --set storageClass.name=nfs \
+  --set storageClass.onDelete=true
+```
+
 ## :octicons-tasklist-16: **Task 1**: Create a PersistentVolumeClaim and attach it to the Pod
 For this tutorial we will create a new deployment with a simple webserver, which serves static files. We want to store the static files on a persistent volume.
-
-Create a file called `nfs-pv.yaml` with the following content:
-
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: webserver-pv
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: slow
-  mountOptions:
-    - hard
-    - nfsvers=4.1
-  nfs:
-    path: /var/data/share
-    server: 192.168.16.17
-```
 
 !!! abstract "Details"
 
@@ -63,12 +75,20 @@ metadata:
   name: webserver-pvc
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce # ReadWriteMany is also possible for NFS
   resources:
     requests:
       storage: 1Gi
-  storageClassName: slow
+  storageClassName: nfs
 ```
+
+!!! note
+
+    The `storageClassName` must match the name of the Storage Class Provider. In our case it is `nfs`. You can check the name of the Storage Class Provider with the following command:
+
+    ```bash
+    kubectl get storageclass
+    ```
 
 Afterwards, create a file called `nfs-deployment.yaml` for an classic `nginx` webserver and try to attach the persistent volume claim at the mount path `/usr/share/nginx/html` to the Pod. 
 
@@ -210,7 +230,7 @@ echo "<h1>Hello World</h1>" > /usr/share/nginx/html/index.html
 
 Now we can visit the webserver and see that the file was created successfully.
 
-Another way to do this is to use the `kubectl cp` command. This command allows us to copy files from and to a container. We can use this to copy a file from our local machine to the container.
+**Another way** to do this is to use the `kubectl cp` command. This command allows us to copy files from and to a container. We can use this to copy a file from our local machine to the container.
 
 First, we need to create a `index.html` file on our local machine.
 
