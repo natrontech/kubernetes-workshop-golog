@@ -54,7 +54,7 @@ stringData:
         --from-literal=DB_HOST="<db host>" \
         --from-literal=DB_PORT="5432" \
         --from-literal=DB_SSLMODE="<disable/enable>" \
-        --dry-run -o yaml > db-secret.yaml
+        --dry-run=client -o yaml > db-secret.yaml
     ```
 
     You will then find the values base64 encoded in the yaml file. You can decode them using the following command:
