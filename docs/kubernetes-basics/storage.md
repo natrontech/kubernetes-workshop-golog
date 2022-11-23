@@ -191,7 +191,7 @@ When we now visit the webserver, we will see that we get a `403 Forbidden` error
 There are multiple ways to do this. One way is to use the `kubectl exec` command. This command allows us to execute a command in a running container. We can use this to open a shell in the container.
 
 ```bash
-kubectl exec -it nfs-webserver-<pod-id> -- /bin/bash --namespace $NAMESPACE
+kubectl exec -it nfs-webserver-<pod-id> --namespace $NAMESPACE -- /bin/bash
 ```
 
 Because there is no editor installed in the container, we simply use `echo` to create a file.
