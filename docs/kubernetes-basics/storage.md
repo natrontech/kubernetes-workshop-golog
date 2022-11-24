@@ -196,7 +196,6 @@ Now you can deploy everything in order to test it.
 
 
 ```bash
-kubectl apply -f nfs-pv.yaml --namespace $NAMESPACE
 kubectl apply -f nfs-pvc.yaml --namespace $NAMESPACE
 kubectl apply -f nfs-deployment.yaml --namespace $NAMESPACE
 kubectl apply -f nfs-service.yaml --namespace $NAMESPACE
