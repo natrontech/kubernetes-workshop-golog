@@ -90,7 +90,7 @@ spec:
     kubectl get storageclass
     ```
 
-Afterwards, create a file called `nfs-deployment.yaml` for an classic `nginx` webserver and try to attach the persistent volume claim at the mount path `/usr/share/nginx/html` to the Pod. 
+Afterwards, create a file called `nfs-deployment.yaml` for a classic `nginx` webserver and try to attach the persistent volume claim at the mount path `/usr/share/nginx/html` to the Pod. 
 
 ??? example "solution"
 
